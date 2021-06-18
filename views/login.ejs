@@ -1,0 +1,29 @@
+<%- include("partials/header") %>
+<div class="container text-center shadow-lg rounded position-absolute top-50 start-50 translate-middle" id="logincontainer">
+    <div class="row align-items-center justify-content-center p-2">
+        <div class="p-3 col-10 col-sm-7 text-center">
+            <img class="img-fluid" src="/img/login_img.svg">
+        </div>
+        <div class="p-3 col-10 col-sm text-center">
+            <h1 class="p-2">COVID-19</h1>
+            <h3 class="p-2">Welcome!</h3>
+            <h6 class="p-2">Sign in to your Account</h6>
+            <form method="POST" action="">
+                <div class="p-2 form-group">
+                <label for="name" class="col-form-label"><i class="fa fa-user-circle-o"></i> User name</label>
+                <input name="uname" type="text" class="shadow form-control form-control-lg rounded-pill" id="uname" required>
+                </div>
+                <div class="p-2 form-group">
+                <label for="password" class="col-form-label"><i class="fa fa-lock"></i> Password</label>
+                <input name="password" type="password" class="shadow form-control form-control-lg rounded-pill" id="password" required>
+                </div>
+                <div class="p-4 form-group">
+                <button type="button" class="shadow btn btn-dark btn-lg rounded-pill">Sign in</button> 
+                </div>
+            </form>
+            <a href="#" class="p-2 link-dark shadow rounded-pill" id="login-a">New User(Sign up)</a>
+        </div>
+    </div>
+</div>
+
+<%- include("partials/footer") %>
