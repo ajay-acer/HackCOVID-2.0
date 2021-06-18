@@ -53,13 +53,15 @@ app.use(function(req,res,next){
 
 
 app.get("/",(req,res)=>{
-    res.redirect("/login")
+  res.redirect("/login")
+
 })
 
 //////////////////////////// Auth Routes Starts //////////////////////////////
 app.get("/login",(req,res)=>{
     res.render("login")
 })
+
 
 
 //////////////////////////// Auth Routes Ends ////////////////////////////////
