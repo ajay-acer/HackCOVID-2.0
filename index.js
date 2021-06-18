@@ -26,7 +26,8 @@ mongoose.connect(process.env.DBURL,connectionParams)
 //////////////////////////// DB Setuo Ends //////////////////////////////////
 
 app.get("/",(req,res)=>{
-    res.redirect("/login")
+  res.redirect("/login")
+
 })
 
 //////////////////////////// Auth Routes Starts //////////////////////////////
