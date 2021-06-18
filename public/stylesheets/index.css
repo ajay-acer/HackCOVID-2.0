@@ -1,18 +1,14 @@
-body{
-    color: floralwhite; 
-    background-image: url('login_wave.svg');
-    background-repeat: no-repeat;
-    background-size: cover;
+html,body{
+    height:100%;
+    margin: 0;
 }
 #loginbody{
-    background-image: url('login_wave.svg');
+    background-image: url('../img/login_wave.svg');
     background-repeat: no-repeat;
     background-size: cover;
+    height: 100%;
 }
 
-#login-a{
-    border-top: 2px solid aquamarine;
-    border-bottom: 2px solid aquamarine;
-}
+
 
 

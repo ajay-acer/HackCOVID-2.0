@@ -1,10 +1,10 @@
 
 <%- include("partials/header") %>
-<div id="loginbody">
-    <div class="container text-center shadow-lg rounded top-50 start-50 translate-middle position-absolute">
-        <div class="row align-items-center justify-content-center p-2">
+<div id="loginbody" class="p-5">
+    <div class="container">
+        <div class="row shadow-lg rounded">
             <div class="p-3 col-10 col-sm-7 text-center">
-                <img class="img-fluid" src="login_img.svg">
+                <img class="img-fluid" src="../img/login_img.svg">
             </div>
             <div class="p-3 col-10 col-sm text-center">
                 <h1 class="p-2">COVID-19</h1>
@@ -23,7 +23,10 @@
                     <button type="button" class="shadow btn btn-dark btn-lg rounded-pill">Sign in</button> 
                     </div>
                 </form>
-                <a href="/signup" class="p-2 link-dark shadow rounded-pill" id="login-a">New User(Sign up)</a>
+                <div style="">
+                    <a href="/signup" class="p-2  shadow rounded-pill btn btn-dark " id="login-a">Sign up</a>
+                </div>
+                
             </div>
         </div>
     </div>
