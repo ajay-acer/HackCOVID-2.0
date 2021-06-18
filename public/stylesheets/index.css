@@ -1,0 +1,12 @@
+#loginbody{
+    background-image: url("/img/login_wave.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: floralwhite;
+}
+#login-a{
+    border-top: 2px solid aquamarine;
+    border-bottom: 2px solid aquamarine;
+}
+
+
