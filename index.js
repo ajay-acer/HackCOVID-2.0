@@ -8,7 +8,7 @@ app.use(express.static("public"))
 app.use(bodyparser.urlencoded({extended: true}))
 
 app.get("/",(req,res)=>{
-    res.send("Login Page")
+    res.render("login")
 })
 
 app.listen(process.env.PORT||3000,()=>{
