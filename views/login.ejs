@@ -1,8 +1,7 @@
-
 <%- include("partials/header") %>
 <div id="loginbody" class="p-5">
     <div class="container">
-        <div class="row shadow-lg rounded">
+        <div class="row shadow-lg rounded align-items-center">
             <div class="p-3 col-10 col-sm-7 text-center">
                 <img class="img-fluid" src="../img/login_img.svg">
             </div>
@@ -12,18 +11,18 @@
                 <h6 class="p-2">Sign in to your Account</h6>
                 <form method="POST" action="/login">
                     <div class="p-2 form-group">
-                    <label for="name" class="col-form-label"><i class="fa fa-user-circle-o"></i> User name</label>
-                    <input name="uname" type="text" class="shadow form-control form-control-lg rounded-pill" id="uname" required>
+                        <label for="name" class="col-form-label"><i class="fa fa-user-circle-o"></i> User name</label>
+                        <input name="uname" type="text" class="shadow form-control form-control-lg rounded-pill" id="uname" required>
                     </div>
                     <div class="p-2 form-group">
-                    <label for="password" class="col-form-label"><i class="fa fa-lock"></i> Password</label>
-                    <input name="password" type="password" class="shadow form-control form-control-lg rounded-pill" id="password" required>
+                        <label for="password" class="col-form-label"><i class="fa fa-lock"></i> Password</label>
+                        <input name="password" type="password" class="shadow form-control form-control-lg rounded-pill" id="password" required>
                     </div>
                     <div class="p-4 form-group">
-                    <button type="button" class="shadow btn btn-dark btn-lg rounded-pill">Sign in</button> 
+                        <button type="button" class="shadow btn btn-dark btn-lg rounded-pill">Sign in</button> 
                     </div>
                 </form>
-                <div style="">
+                <div>
                     <a href="/signup" class="p-2  shadow rounded-pill btn btn-dark " id="login-a">Sign up</a>
                 </div>
                 
@@ -31,8 +30,6 @@
         </div>
     </div>
 </div>
-
-
 <%- include("partials/footer") %>
 
 

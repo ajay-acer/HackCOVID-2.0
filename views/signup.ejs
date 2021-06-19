@@ -1,0 +1,328 @@
+<%- include("partials/header") %>
+<div class="container" id="signupcontainer">
+    <form action="" method="POST" id="regForm">
+        <div class="row shadow-lg rounded align-items-center justify-content-center p-2" id="signuprow">
+            <div class="p-2 col-12 col-sm-3 text-center">
+                <h2 class="p-2">Sign up here</h2>
+                <img class="img-fluid p-2" src="https://lirp.cdn-website.com/69c0b277/dms3rep/multi/opt/Home+care+coronavirus+%28covid-19%29-1440w.png">
+                <a href="/login" class="p-2 shadow rounded-pill btn btn-primary " id="login-a"> Log in </a>
+            </div>
+            <div class="p-2 col-12 col-sm-8" id="signupcol">
+                <div class="tab">
+                    <div class="row p-2">
+                        <div class="col-12 col-sm-6">
+                            <label for="username" class="col-form-label">User name</label>
+                            <input name="patient[username]" type="text" class="form-control" id="username" required>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <label for="password" class="col-form-label">Password</label>
+                            <input name="password" type="password" class="form-control" id="password" required>
+                        </div>
+                    </div> 
+                    <div class="row p-2">
+                        <div class="col-12 col-sm-6">
+                            <label for="name" class="col-form-label">Name</label>
+                            <input name="patient[name]" type="text" class="form-control" id="name" required>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <label for="phone_no" class="col-form-label">Phone number</label>
+                            <input name="patient[phone_no]" type="number" class="form-control" id="phone_no" required>
+                        </div>
+                    </div>
+                    <div class="row p-2">
+                        <div class="col-12 col-sm-6">
+                            <label for="email" class="col-form-label">Email</label>
+                            <input name="patient[email]" type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <label for="address" class="col-form-label">Address</label>
+                            <textarea class="form-control" id="patient[address]" name="address" required></textarea>
+                        </div>
+                    </div>
+                    <div class="row p-2">
+                        <div class="col-12 col-sm-6">
+                            <label for="district" class="col-form-label">District</label>
+                            <select name="patient[district]" id="district" class="form-select" required>
+                                <option value="dk">Dakshina Kannada</option>
+                                <option value="up">Udupi</option>
+                                <option value="ban">Bangalore</option>
+                                <option value="mysore">Mysore</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <label for="status" class="col-form-label">Status</label>
+                            <select name="patient[status]" id="status" class="form-select" required>
+                                <option value="positive">Positive +</option>
+                                <option value="negative">Negative -</option>
+                                <option value="suspected+">Suspected +</option>
+                            </select>
+                        </div>
+                        
+                    </div>   
+                    <div class="row p-2">
+                        <div class="col-12 col-sm-6">
+                            <label for="caretakername" class="col-form-label">Caretaker Name</label>
+                            <input name="patient[caretaker[name]]" type="text" class="form-control" id="caretakername" required>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <label for="caretakerphoneno" class="col-form-label">Caretaker's Phone No.</label>
+                            <input name="patient[caretaker[phoneno]]" type="number" class="form-control" id="caretakerphoneno" required>
+                        </div>
+                    </div> 
+                    <div class="row p-2">
+                        <div class="col-12 col-sm-12">
+                            <label for="comordity" class="col-form-label">Comordity Details</label>
+                        </div>
+                    </div>
+                    <div class="row p-2 align-items-center">
+                        <div class="col-3 col-sm-3">
+                            <label for="cancer" class="col-form-label">Cancer</label>
+                        </div>
+                        <div class="col-7 col-sm-8">
+                            <p>Are you a Cancer patient?</p>
+                        </div>
+                        <div class="col-1 col-sm-1">
+                            <input class="form-check-input" name="patient[comordity[cancer]]" type="checkbox" value="cancer" id="cancer">
+                        </div>
+                    </div>  
+                </div>
+                <div class="tab">
+                    <div class="row p-2 align-items-center">
+                        <div class="col-3 col-sm-3">
+                            <label for="ckd" class="col-form-label">CKD</label>
+                        </div>
+                        <div class="col-7 col-sm-8">
+                            <p>Are you suffering from Chronic kidney disease (CKD)? CKD means your kidneys are damaged and can't filter blood the way they should?</p>
+                        </div>
+                        <div class="col-1 col-sm-1">
+                            <input class="form-check-input" name="patient[comordity[ckd]]" type="checkbox" value="ckd" id="ckd">
+                        </div>
+                    </div> 
+                    <div class="row p-2 align-items-center">
+                        <div class="col-3 col-sm-3">
+                            <label for="copd" class="col-form-label">COPD</label>
+                        </div>
+                        <div class="col-7 col-sm-8">
+                            <p>Do you have Chronic obstructive pulmonary disease (COPD)? COPD is a chronic inflammatory lung disease that causes obstructed airflow from the lungs.</p>
+                        </div>
+                        <div class="col-1 col-sm-1">
+                            <input class="form-check-input" name="patient[comordity[copd]]" type="checkbox" value="copd" id="copd">
+                        </div>
+                    </div> 
+                    <div class="row p-2 align-items-center">
+                        <div class="col-3 col-sm-3">
+                            <label for="dementia" class="col-form-label">Dementia</label>
+                        </div>
+                        <div class="col-7 col-sm-8">
+                            <p>Do you have Dementia syndromes? In which there is deterioration in memory, thinking, behaviour and the ability to perform everyday activities?</p>
+                        </div>
+                        <div class="col-1 col-sm-1">
+                            <input class="form-check-input" name="patient[comordity[dementia]]" type="checkbox" value="dementia" id="dementia">
+                        </div>
+                    </div> 
+                    <div class="row p-2 align-items-center">
+                        <div class="col-3 col-sm-3">
+                            <label for="diabetes" class="col-form-label">Diabetes</label>
+                        </div>
+                        <div class="col-7 col-sm-8">
+                            <p>Are you Diabetic patient?, which means your blood glucose, also called blood sugar, is too high</p>
+                        </div>
+                        <div class="col-1 col-sm-1">
+                            <input class="form-check-input" name="patient[comordity[diabetes]]" type="checkbox" value="diabetes" id="diabetes">
+                        </div>
+                    </div> 
+                    <div class="row p-2 align-items-center">
+                        <div class="col-3 col-sm-3">
+                            <label for="down_syndromes" class="col-form-label">Down syndrome</label>
+                        </div>
+                        <div class="col-7 col-sm-8">
+                            <p>Do you have Down syndrome or Down's syndrome, also known as trisomy 21? This is a genetic disorder caused by the presence of all or part of a third copy of chromosome 21.</p>
+                        </div>
+                        <div class="col-1 col-sm-1">
+                            <input class="form-check-input" name="patient[comordity[down_syndromes]]" type="checkbox" value="down_syndrome" id="down_syndrome">
+                        </div>
+                    </div>
+                    <div class="row p-2 align-items-center">
+                        <div class="col-3 col-sm-3">
+                            <label for="heart_conditions" class="col-form-label">Heart conditions</label>
+                        </div>
+                        <div class="col-7 col-sm-8">
+                            <p>Are you suffering from any Heart realted issues that include diseased vessels, structural problems and blood clots?</p>
+                        </div>
+                        <div class="col-1 col-sm-1">
+                            <input class="form-check-input" name="patient[comordity[heart_conditions]]" type="checkbox" value="heart_conditions" id="heart_conditions">
+                        </div>
+                    </div> 
+                    <div class="row p-2 align-items-center">
+                        <div class="col-3 col-sm-3">
+                            <label for="hiv" class="col-form-label">HIV</label>
+                        </div>
+                        <div class="col-7 col-sm-8">
+                            <p>Are you positive for HIV (human immunodeficiency virus)?</p>
+                        </div>
+                        <div class="col-1 col-sm-1">
+                            <input class="form-check-input" name="patient[comordity[hiv]]" type="checkbox" value="hiv" id="hiv">
+                        </div>
+                    </div>
+                </div>
+                <div class="tab">
+                    <div class="row p-2 align-items-center">
+                        <div class="col-3 col-sm-3">
+                            <label for="immunocompromised_state" class="col-form-label">Immunocompromised state</label>
+                        </div>
+                        <div class="col-7 col-sm-8">
+                            <p>Check if you have Weakened immune system means a higher chance of illness and infection.</p>
+                        </div>
+                        <div class="col-1 col-sm-1">
+                            <input class="form-check-input" name="patient[comordity[immunocompromised_state]]" type="checkbox" value="immunocompromised_state" id="immunocompromised_state">
+                        </div>
+                    </div>
+                    <div class="row p-2 align-items-center">
+                        <div class="col-3 col-sm-3">
+                            <label for="liver" class="col-form-label">Liver disease</label>
+                        </div>
+                        <div class="col-7 col-sm-8">
+                            <p>Do you suffering from any Liver disease such as hepatitis A, hepatitis B,fatty liver disease,cirrhosis etc.?</p>
+                        </div>
+                        <div class="col-1 col-sm-1">
+                            <input class="form-check-input" name="patient[comordity[liver]]" type="checkbox" value="liver" id="liver">
+                        </div>
+                    </div> 
+                    <div class="row p-2 align-items-center">
+                        <div class="col-3 col-sm-3">
+                            <label for="overweight_obesity" class="col-form-label">Overweight and obesity</label>
+                        </div>
+                        <div class="col-7 col-sm-8">
+                            <p>Check if your Weight is above what's considered healthy.</p>
+                        </div>
+                        <div class="col-1 col-sm-1">
+                            <input class="form-check-input" name="patient[comordity[overweight_obesity]]" type="checkbox" value="overweight_obesity" id="overweight_obesity">
+                        </div>
+                    </div> 
+                    <div class="row p-2 align-items-center">
+                        <div class="col-3 col-sm-3">
+                            <label for="pregnancy" class="col-form-label">Pregnancy</label>
+                        </div>
+                        <div class="col-7 col-sm-8">
+                            <p>Are you pregnant?</p>
+                        </div>
+                        <div class="col-1 col-sm-1">
+                            <input class="form-check-input" name="patient[comordity[pregnancy]]" type="checkbox" value="pregnancy" id="pregnancy">
+                        </div>
+                    </div> 
+                    <div class="row p-2 align-items-center">
+                        <div class="col-3 col-sm-3">
+                            <label for="thalassemia" class="col-form-label">Sickle cell disease or thalassemia</label>
+                        </div>
+                        <div class="col-7 col-sm-8">
+                            <p>Do you have Thalassemia? <br> A blood disorder involving lower-than-normal amounts of an oxygen-carrying protein.</p>
+                        </div>
+                        <div class="col-1 col-sm-1">
+                            <input class="form-check-input" name="patient[comordity[thalassemia]]" type="checkbox" value="thalassemia" id="thalassemia">
+                        </div>
+                    </div> 
+                    <div class="row p-2 align-items-center">
+                        <div class="col-3 col-sm-3">
+                            <label for="smoker" class="col-form-label">Smoking, current or former</label>
+                        </div>
+                        <div class="col-7 col-sm-8">
+                            <p>Do you have smoke?</p>
+                        </div>
+                        <div class="col-1 col-sm-1">
+                            <input class="form-check-input" name="patient[comordity[smoker]]" type="checkbox" value="smoker" id="smoker">
+                        </div>
+                    </div>
+                    <div class="row p-2 align-items-center">
+                        <div class="col-3 col-sm-3">
+                            <label for="transplant" class="col-form-label">Solid organ or blood stem cell transplant</label>
+                        </div>
+                        <div class="col-7 col-sm-8">
+                            <p>Do you have any solid organ or blood stem cell transplant?</p>
+                        </div>
+                        <div class="col-1 col-sm-1">
+                            <input class="form-check-input" name="patient[comordity[transplant]]" type="checkbox" value="transplant" id="transplant">
+                        </div>
+                    </div>
+                    <div class="row p-2 align-items-center">
+                        <div class="col-3 col-sm-3">
+                            <label for="stroke" class="col-form-label">Stroke or cerebrovascular disease</label>
+                        </div>
+                        <div class="col-7 col-sm-8">
+                            <p>Do you have any Stroke or cerebrovascular disease?</p>
+                        </div>
+                        <div class="col-1 col-sm-1">
+                            <input class="form-check-input" name="patient[comordity[stroke]]" type="checkbox" value="stroke" id="stroke">
+                        </div>
+                    </div> 
+                </div>
+                <div id="signup_btn" class="p-2">
+                    <button type="button" id="prevBtn" class="btn btn-primary" onclick="nextPrev(-1)">Previous</button>
+                    <button type="button" id="nextBtn" class="btn btn-primary" onclick="nextPrev(1)">Next</button>
+                </div>
+                <div style="text-align:center;">
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    var currentTab = 0; 
+    showTab(currentTab);
+    
+    function showTab(n) {
+      var x = document.getElementsByClassName("tab");
+      x[n].style.display = "block";
+      if (n == 0) {
+        document.getElementById("prevBtn").style.display = "none";
+      } else {
+        document.getElementById("prevBtn").style.display = "inline";
+      }
+      if (n == (x.length - 1)) {
+        document.getElementById("nextBtn").innerHTML = "Submit";
+      } else {
+        document.getElementById("nextBtn").innerHTML = "Next";
+      }
+      fixStepIndicator(n)
+    }
+    
+    function nextPrev(n) {
+      var x = document.getElementsByClassName("tab");
+      if (n == 1 && !validateForm()) return false;
+      x[currentTab].style.display = "none";
+      currentTab = currentTab + n;
+      if (currentTab >= x.length) {
+        document.getElementById("regForm").submit();
+        return false;
+      }
+      showTab(currentTab);
+    }
+    
+    function validateForm() {
+      var x, y, i, valid = true;
+      x = document.getElementsByClassName("tab");
+      y = x[currentTab].getElementsByTagName("input");
+      for (i = 0; i < y.length; i++) {
+        if (y[i].value == "") {
+          y[i].className += " invalid";
+          valid = false;
+        }
+      }
+      if (valid) {
+        document.getElementsByClassName("step")[currentTab].className += " finish";
+      }
+      return valid;
+    }
+    
+    function fixStepIndicator(n) {
+      var i, x = document.getElementsByClassName("step");
+      for (i = 0; i < x.length; i++) {
+        x[i].className = x[i].className.replace(" active", "");
+      }
+      x[n].className += " active";
+    }
+    </script>
+    
+<%- include("partials/footer") %>
