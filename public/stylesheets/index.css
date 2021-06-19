@@ -25,7 +25,7 @@ html,body{
     opacity: 1;
   }
 .step.finish {
-    background-color: #06ad70;
+    background-color: #0ebb7c;
 }
 #signup_btn{
     text-align: end;
@@ -40,8 +40,23 @@ html,body{
     border-radius: 2%;
 }
 #signupcontainer{
-    padding: 5px 2px 2px 2px;
+    padding: 15px 2px 2px 2px;
 }
+input.invalid,textarea.invalid {
+    background-color: #ffdddd;
+}
+#districtcontainer{
+    margin: auto;
+    width: 85%;
+    padding-top: 20px;
+    
+}
+
+#districtcol{
+    border: 2px solid aquamarine;
+    background-color: whitesmoke;
+}
+
 
 
 
