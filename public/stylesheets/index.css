@@ -8,6 +8,40 @@ html,body{
     background-size: cover;
     height: 100%;
 }
+.tab {
+    display: none;
+  }
+.step {
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #b3abab;
+    border: none;  
+    border-radius: 50%;
+    display: inline-block;
+    opacity: 0.5;
+  }
+.step.active {
+    opacity: 1;
+  }
+.step.finish {
+    background-color: #06ad70;
+}
+#signup_btn{
+    text-align: end;
+}
+#signuprow{
+    background: rgb(0,191,166);
+    background: linear-gradient(90deg, rgba(0,191,166,1) 0%, rgba(16,84,70,0.8578781854538691) 74%, rgba(0,255,183,1) 100%);
+}
+#signupcol{
+    border: 2px solid aquamarine;
+    background-color: whitesmoke;
+    border-radius: 2%;
+}
+#signupcontainer{
+    padding: 5px 2px 2px 2px;
+}
 
 
 
