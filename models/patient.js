@@ -1,0 +1,89 @@
+const mongoose=require('mongoose')
+      passportLocalMongoose=require('passport-local-mongoose')
+const patientSchema=new mongoose.Schema({
+    username:String,
+    password:String,
+    name:String,
+    email:String,
+    phone_no:Number,
+    address:{
+        districtid:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'District'
+        }, // noti/p
+        taluk:String,
+        state:String,
+        street_name:String,
+        locality:String,
+    },
+    caretaker:{
+        name:String,
+        phoneno:Number
+    },
+    startdate:Date, //notip
+    enddate:Date, //notip
+    status:String,
+    comorbidity:{
+        cancer:Boolean,
+        ckd:Boolean,
+        copd:Boolean,
+        dementia:Boolean,
+        diabetes:Boolean,
+        down_syndrome:Boolean,
+        hear_tconditions:Boolean,
+        hiv:Boolean,
+        immunocompromised_state:Boolean,
+        liver:Boolean,
+        overweight_obesity:Boolean,
+        pregnancy:Boolean,
+        thalassemia:Boolean,
+        smoker:Boolean,
+        transplant:Boolean,
+        stroke:Boolean,
+    },
+    issymptomatic:Boolean,
+    symptons:{
+        fever:Boolean,
+        body_temperature:Boolean,
+        chills:Boolean,
+        cough:Boolean,
+        shortness_of_breath:Boolean,
+        fatigue:Boolean,
+        muscle_body_aches:Boolean,
+        headache:Boolean,
+        taste_smell_loss:Boolean,
+        sore_throat:Boolean,
+        runny_nose:Boolean,
+        nausea:Boolean,
+        dairrhea:Boolean,
+    },
+    spo2:Number,
+    role:{
+        type:String,
+        default:'PATIENT'
+    }, //notip
+    dailydata:[{
+        date:Date,
+        time:String,
+        spo2:Number,
+        fever:Boolean,
+        body_temperature:Boolean,
+        chills:Boolean,
+        cough:Boolean,
+        fatigue:Boolean,
+        muscle_body_aches:Boolean,
+        headache:Boolean,
+        taste_smell_loss:Boolean,
+        sore_throat:Boolean,
+        runny_nose:Boolean,
+        nausea:Boolean,
+        dairrhea:Boolean,
+        review:String
+    }], //noti/p
+    doctorid:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Doctor'
+    }//noti/p
+})
+patientSchema.plugin(passportLocalMongoose);
+module.exports=new mongoose.model('Patient',patientSchema)

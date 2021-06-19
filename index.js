@@ -26,6 +26,10 @@ mongoose.connect(process.env.DBURL,connectionParams)
     console.log(err)
 })
 
+const Patient=require('./models/Patient'),
+      District=require('./models/District'),
+      Doctor=require('./models/Doctor'),
+      Lab=require('./models/Lab')
 //////////////////////////// DB Setuo Ends //////////////////////////////////
 
 
@@ -39,9 +43,18 @@ app.use(require("express-session")({
 app.use(passport.initialize());
 
 app.use(passport.session());
-/*passport.use(new LocalStrategy(Hospital.authenticate()));
-passport.serializeUser(Hospital.serializeUser());
-passport.deserializeUser(Hospital.deserializeUser());*/
+passport.use(new LocalStrategy(Patient.authenticate()));
+passport.serializeUser(Patient.serializeUser());
+passport.deserializeUser(Patient.deserializeUser());
+passport.use(new LocalStrategy(Doctor.authenticate()));
+passport.serializeUser(Doctor.serializeUser());
+passport.deserializeUser(Doctor.deserializeUser());
+passport.use(new LocalStrategy(Lab.authenticate()));
+passport.serializeUser(Lab.serializeUser());
+passport.deserializeUser(Lab.deserializeUser());
+passport.use(new LocalStrategy(District.authenticate()));
+passport.serializeUser(District.serializeUser());
+passport.deserializeUser(District.deserializeUser());
 
 app.use(function(req,res,next){
 	res.locals.currentUser=req.user;
@@ -51,7 +64,16 @@ app.use(function(req,res,next){
 
 //////////////////////////// Auth Setup Ends ///////////////////////////////
 
+//////////////////////////// Roles ////////////////////////////////////////
 
+const roles ={
+    doctor:'DOCTOR',
+    patient:'PATIENT',
+    district:'DISTRICT',
+    lab:'LAB'
+}
+
+//////////////////////////// Roles ///////////////////////////////////////
 app.get("/",(req,res)=>{
   res.redirect("/login")
 
