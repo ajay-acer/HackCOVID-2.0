@@ -1,0 +1,44 @@
+<%- include("partials/header") %>
+<div class="container " id="districtcontainer">
+    <form action="" method="POST">
+        <div class="row shadow-lg rounded align-items-center justify-content-center p-2" id="signuprow">
+            <div class="p-2 col-12 col-md-3 text-center">
+                <h2 class="p-2">Register District</h2>
+                <img class="img-fluid p-2" src="https://lirp.cdn-website.com/69c0b277/dms3rep/multi/opt/Home+care+coronavirus+%28covid-19%29-1440w.png" style="width: 200%;">
+            </div>
+            <div class="p-2 col-12 col-md-8 rounded" id="districtcol">
+                <div class="row p-2 justify-content-center">
+                    <div class="col-12 col-md-5">
+                        <label for="username" class="col-form-label">User name</label>
+                        <input name="district[username]" type="text" class="form-control" id="username" required>
+                    </div>
+                    <div class="col-12 col-md-5">
+                        <label for="password" class="col-form-label">Password</label>
+                        <input name="password" type="password" class="form-control" id="password" required>
+                    </div>
+                </div> 
+                <div class="row p-2 justify-content-center">
+                    <div class="col-12 col-md-5">
+                        <label for="name" class="col-form-label">District Name</label>
+                        <input name="district[name]" type="text" class="form-control" id="name" required>
+                    </div>
+                    <div class="col-12 col-md-5">
+                        <label for="phone_no" class="col-form-label">Phone number</label>
+                        <input name="district[phone_no]" type="number" class="form-control" id="phone_no" required>
+                    </div>
+                </div>
+                <div class="row p-2 justify-content-center">
+                    <div class="col-12 col-md-5">
+                        <label for="email" class="col-form-label">Email</label>
+                        <input name="district[email]" type="email" class="form-control" id="email" required>
+                    </div>
+                </div>
+                <div class="p-2 text-center">
+                    <button type="submit" class="shadow btn btn-dark btn-lg rounded-pill">Submit</button>
+                </div>  
+            </div>
+        </div>
+    </form>
+</div>
+
+<%- include("partials/footer") %>

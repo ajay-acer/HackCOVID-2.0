@@ -8,7 +8,8 @@
                 <a href="/login" class="p-2 shadow rounded-pill btn btn-primary " id="login-a"> Log in </a>
             </div>
             <div class="p-2 col-12 col-sm-8" id="signupcol">
-                <div class="tab">
+               <div class="tab">
+                   <h2 class="text-center p-2">Personal Details</h2>
                     <div class="row p-2">
                         <div class="col-12 col-sm-6">
                             <label for="username" class="col-form-label">User name</label>
@@ -39,7 +40,7 @@
                             <textarea class="form-control" id="patient[address]" name="address" required></textarea>
                         </div>
                     </div>
-                    <div class="row p-2">
+                    <div class="row p-3">
                         <div class="col-12 col-sm-6">
                             <label for="district" class="col-form-label">District</label>
                             <select name="patient[district]" id="district" class="form-select" required>
@@ -57,23 +58,20 @@
                                 <option value="suspected+">Suspected +</option>
                             </select>
                         </div>
-                        
                     </div>   
                     <div class="row p-2">
                         <div class="col-12 col-sm-6">
                             <label for="caretakername" class="col-form-label">Caretaker Name</label>
-                            <input name="patient[caretaker[name]]" type="text" class="form-control" id="caretakername" required>
+                            <input name="patient[caretaker][name]" type="text" class="form-control" id="caretakername" required>
                         </div>
                         <div class="col-12 col-sm-6">
                             <label for="caretakerphoneno" class="col-form-label">Caretaker's Phone No.</label>
-                            <input name="patient[caretaker[phoneno]]" type="number" class="form-control" id="caretakerphoneno" required>
+                            <input name="patient[caretaker][phoneno]" type="number" class="form-control" id="caretakerphoneno" required>
                         </div>
-                    </div> 
-                    <div class="row p-2">
-                        <div class="col-12 col-sm-12">
-                            <label for="comordity" class="col-form-label">Comordity Details</label>
-                        </div>
-                    </div>
+                    </div>   
+                </div>
+                <div class="tab">
+                    <h2 class="text-center p-2">Comordity Details</h2>
                     <div class="row p-2 align-items-center">
                         <div class="col-3 col-sm-3">
                             <label for="cancer" class="col-form-label">Cancer</label>
@@ -82,11 +80,9 @@
                             <p>Are you a Cancer patient?</p>
                         </div>
                         <div class="col-1 col-sm-1">
-                            <input class="form-check-input" name="patient[comordity[cancer]]" type="checkbox" value="cancer" id="cancer">
+                            <input class="form-check-input" name="patient[comordity][cancer]" type="checkbox" value="cancer" id="cancer">
                         </div>
-                    </div>  
-                </div>
-                <div class="tab">
+                    </div>
                     <div class="row p-2 align-items-center">
                         <div class="col-3 col-sm-3">
                             <label for="ckd" class="col-form-label">CKD</label>
@@ -95,7 +91,7 @@
                             <p>Are you suffering from Chronic kidney disease (CKD)? <br>CKD means kidneys are damaged and can't filter blood the way they should?</p>
                         </div>
                         <div class="col-1 col-sm-1">
-                            <input class="form-check-input" name="patient[comordity[ckd]]" type="checkbox" value="ckd" id="ckd">
+                            <input class="form-check-input" name="patient[comordity][ckd]" type="checkbox" value="ckd" id="ckd">
                         </div>
                     </div> 
                     <div class="row p-2 align-items-center">
@@ -106,7 +102,7 @@
                             <p>Do you have Chronic obstructive pulmonary disease (COPD)? <br>COPD is a chronic inflammatory lung disease that causes obstructed airflow from the lungs.</p>
                         </div>
                         <div class="col-1 col-sm-1">
-                            <input class="form-check-input" name="patient[comordity[copd]]" type="checkbox" value="copd" id="copd">
+                            <input class="form-check-input" name="patient[comordity][copd]" type="checkbox" value="copd" id="copd">
                         </div>
                     </div> 
                     <div class="row p-2 align-items-center">
@@ -117,7 +113,7 @@
                             <p>Do you have Dementia syndromes? In which there is deterioration in memory, thinking, behaviour and the ability to perform everyday activities?</p>
                         </div>
                         <div class="col-1 col-sm-1">
-                            <input class="form-check-input" name="patient[comordity[dementia]]" type="checkbox" value="dementia" id="dementia">
+                            <input class="form-check-input" name="patient[comordity][dementia]" type="checkbox" value="dementia" id="dementia">
                         </div>
                     </div> 
                     <div class="row p-2 align-items-center">
@@ -128,7 +124,7 @@
                             <p>Are you Diabetic patient?, which means your blood glucose, also called blood sugar, is too high</p>
                         </div>
                         <div class="col-1 col-sm-1">
-                            <input class="form-check-input" name="patient[comordity[diabetes]]" type="checkbox" value="diabetes" id="diabetes">
+                            <input class="form-check-input" name="patient[comordity][diabetes]" type="checkbox" value="diabetes" id="diabetes">
                         </div>
                     </div> 
                     <div class="row p-2 align-items-center">
@@ -139,18 +135,20 @@
                             <p>Do you have Down syndrome or Down's syndrome, also known as trisomy 21? This is a genetic disorder caused by the presence of all or part of a third copy of chromosome 21.</p>
                         </div>
                         <div class="col-1 col-sm-1">
-                            <input class="form-check-input" name="patient[comordity[down_syndromes]]" type="checkbox" value="down_syndrome" id="down_syndrome">
+                            <input class="form-check-input" name="patient[comordity][down_syndromes]" type="checkbox" value="down_syndrome" id="down_syndrome">
                         </div>
                     </div>
+                </div>
+                <div class="tab">
                     <div class="row p-2 align-items-center">
                         <div class="col-3 col-sm-3">
-                            <label for="heart_conditions" class="col-form-label">Heart conditions</label>
+                            <label for="heart_conditions" class="col-form-label">Heart disease</label>
                         </div>
                         <div class="col-7 col-sm-8">
                             <p>Are you suffering from any Heart realted issues that include diseased vessels, structural problems and blood clots?</p>
                         </div>
                         <div class="col-1 col-sm-1">
-                            <input class="form-check-input" name="patient[comordity[heart_conditions]]" type="checkbox" value="heart_conditions" id="heart_conditions">
+                            <input class="form-check-input" name="patient[comordity][heart_conditions]" type="checkbox" value="heart_conditions" id="heart_conditions">
                         </div>
                     </div> 
                     <div class="row p-2 align-items-center">
@@ -161,11 +159,9 @@
                             <p>Are you positive for HIV (human immunodeficiency virus)?</p>
                         </div>
                         <div class="col-1 col-sm-1">
-                            <input class="form-check-input" name="patient[comordity[hiv]]" type="checkbox" value="hiv" id="hiv">
+                            <input class="form-check-input" name="patient[comordity][hiv]" type="checkbox" value="hiv" id="hiv">
                         </div>
                     </div>
-                </div>
-                <div class="tab">
                     <div class="row p-2 align-items-center">
                         <div class="col-3 col-sm-3">
                             <label for="immunocompromised_state" class="col-form-label">Immunocompromised state</label>
@@ -174,7 +170,7 @@
                             <p>Check if you have Weakened immune system means a higher chance of illness and infection.</p>
                         </div>
                         <div class="col-1 col-sm-1">
-                            <input class="form-check-input" name="patient[comordity[immunocompromised_state]]" type="checkbox" value="immunocompromised_state" id="immunocompromised_state">
+                            <input class="form-check-input" name="patient[comordity][immunocompromised_state]" type="checkbox" value="immunocompromised_state" id="immunocompromised_state">
                         </div>
                     </div>
                     <div class="row p-2 align-items-center">
@@ -185,7 +181,7 @@
                             <p>Do you suffering from any Liver disease such as hepatitis A, hepatitis B,fatty liver disease,cirrhosis etc.?</p>
                         </div>
                         <div class="col-1 col-sm-1">
-                            <input class="form-check-input" name="patient[comordity[liver]]" type="checkbox" value="liver" id="liver">
+                            <input class="form-check-input" name="patient[comordity][liver]" type="checkbox" value="liver" id="liver">
                         </div>
                     </div> 
                     <div class="row p-2 align-items-center">
@@ -196,7 +192,7 @@
                             <p>Check if your Weight is above what's considered healthy.</p>
                         </div>
                         <div class="col-1 col-sm-1">
-                            <input class="form-check-input" name="patient[comordity[overweight_obesity]]" type="checkbox" value="overweight_obesity" id="overweight_obesity">
+                            <input class="form-check-input" name="patient[comordity][overweight_obesity]" type="checkbox" value="overweight_obesity" id="overweight_obesity">
                         </div>
                     </div> 
                     <div class="row p-2 align-items-center">
@@ -207,7 +203,7 @@
                             <p>Are you pregnant?</p>
                         </div>
                         <div class="col-1 col-sm-1">
-                            <input class="form-check-input" name="patient[comordity[pregnancy]]" type="checkbox" value="pregnancy" id="pregnancy">
+                            <input class="form-check-input" name="patient[comordity][pregnancy]" type="checkbox" value="pregnancy" id="pregnancy">
                         </div>
                     </div> 
                     <div class="row p-2 align-items-center">
@@ -218,7 +214,7 @@
                             <p>Do you have Thalassemia? <br> A blood disorder involving lower-than-normal amounts of an oxygen-carrying protein.</p>
                         </div>
                         <div class="col-1 col-sm-1">
-                            <input class="form-check-input" name="patient[comordity[thalassemia]]" type="checkbox" value="thalassemia" id="thalassemia">
+                            <input class="form-check-input" name="patient[comordity][thalassemia]" type="checkbox" value="thalassemia" id="thalassemia">
                         </div>
                     </div> 
                     <div class="row p-2 align-items-center">
@@ -229,9 +225,11 @@
                             <p>Do you have smoke?</p>
                         </div>
                         <div class="col-1 col-sm-1">
-                            <input class="form-check-input" name="patient[comordity[smoker]]" type="checkbox" value="smoker" id="smoker">
+                            <input class="form-check-input" name="patient[comordity][smoker]" type="checkbox" value="smoker" id="smoker">
                         </div>
                     </div>
+                </div>
+                <div class="tab">
                     <div class="row p-2 align-items-center">
                         <div class="col-3 col-sm-3">
                             <label for="transplant" class="col-form-label">Solid organ or blood stem cell transplant</label>
@@ -240,7 +238,7 @@
                             <p>Do you have any solid organ or blood stem cell transplant?</p>
                         </div>
                         <div class="col-1 col-sm-1">
-                            <input class="form-check-input" name="patient[comordity[transplant]]" type="checkbox" value="transplant" id="transplant">
+                            <input class="form-check-input" name="patient[comordity][transplant]" type="checkbox" value="transplant" id="transplant">
                         </div>
                     </div>
                     <div class="row p-2 align-items-center">
@@ -251,15 +249,95 @@
                             <p>Do you have any Stroke or cerebrovascular disease?</p>
                         </div>
                         <div class="col-1 col-sm-1">
-                            <input class="form-check-input" name="patient[comordity[stroke]]" type="checkbox" value="stroke" id="stroke">
+                            <input class="form-check-input" name="patient[comordity][stroke]" type="checkbox" value="stroke" id="stroke">
                         </div>
                     </div> 
-                </div>
+                    <div class="row p-2 align-items-center justify-content-center">
+                        <h2 class="text-center p-2">Symptoms</h2>
+                        <div class="col-4 col-sm-9">
+                            <div class="row p-3 align-items-center">
+                                <div class="col-9 col-sm-3">
+                                    <label for="fever" class="col-form-label">Fever</label>
+                                </div>
+                                <div class="col-3 col-sm-3">
+                                    <input class="form-check-input" name="patient[symptons][fever]" type="checkbox" value="fever" id="fever">
+                                </div>
+                                <div class="col-9 col-sm-3">
+                                    <label for="chills" class="col-form-label">Chills</label>
+                                </div>
+                                <div class="col-3 col-sm-3">
+                                    <input class="form-check-input" name="patient[symptons][chills]" type="checkbox" value="chills" id="chills">
+                                </div>
+                                <div class="col-9 col-sm-3">
+                                    <label for="cough" class="col-form-label">Cough</label>
+                                </div>
+                                <div class="col-3 col-sm-3">
+                                    <input class="form-check-input" name="patient[symptons][cough]" type="checkbox" value="cough" id="cough">
+                                </div>
+                                <div class="col-9 col-sm-3">
+                                    <label for="shortness_of_breath" class="col-form-label">Shortness of breath</label>
+                                </div>
+                                <div class="col-3 col-sm-3">
+                                    <input class="form-check-input" name="patient[symptons][shortness_of_breath]" type="checkbox" value="shortness_of_breath" id="shortness_of_breath">
+                                </div>
+                                <div class="col-9 col-sm-3">
+                                    <label for="fatigue" class="col-form-label">Fatigue</label>
+                                </div>
+                                <div class="col-3 col-sm-3">
+                                    <input class="form-check-input" name="patient[symptons][fatigue]" type="checkbox" value="fatigue" id="fatigue">
+                                </div>
+                                <div class="col-9 col-sm-3">
+                                    <label for="muscle_body_aches" class="col-form-label">Muscle body aches</label>
+                                </div>
+                                <div class="col-3 col-sm-3">
+                                    <input class="form-check-input" name="patient[symptons][muscle_body_aches]" type="checkbox" value="muscle_body_aches" id="muscle_body_aches">
+                                </div>
+                                <div class="col-9 col-sm-3">
+                                    <label for="headache" class="col-form-label">Headache</label>
+                                </div>
+                                <div class="col-3 col-sm-3">
+                                    <input class="form-check-input" name="patient[symptons][headache]" type="checkbox" value="headache" id="headache">
+                                </div>
+                                <div class="col-9 col-sm-3">
+                                    <label for="taste_smell_loss" class="col-form-label">Loss of taste or smell</label>
+                                </div>
+                                <div class="col-3 col-sm-3">
+                                    <input class="form-check-input" name="patient[symptons][taste_smell_loss]" type="checkbox" value="taste_smell_loss" id="taste_smell_loss">
+                                </div>
+                                <div class="col-9 col-sm-3">
+                                    <label for="sore_throat" class="col-form-label">Sore throat</label>
+                                </div>
+                                <div class="col-3 col-sm-3">
+                                    <input class="form-check-input" name="patient[symptons][sore_throat]" type="checkbox" value="sore_throat" id="sore_throat">
+                                </div>
+                                <div class="col-9 col-sm-3">
+                                    <label for="runny_nose" class="col-form-label">Runny nose</label>
+                                </div>
+                                <div class="col-3 col-sm-3">
+                                    <input class="form-check-input" name="patient[symptons][runny_nose]" type="checkbox" value="runny_nose" id="runny_nose">
+                                </div>
+                                <div class="col-9 col-sm-3">
+                                    <label for="nausea" class="col-form-label">Nausea</label>
+                                </div>
+                                <div class="col-3 col-sm-3">
+                                    <input class="form-check-input" name="patient[symptons][nausea]" type="checkbox" value="nausea" id="nausea">
+                                </div>
+                                <div class="col-9 col-sm-3">
+                                    <label for="dairrhea" class="col-form-label">Dairrhea</label>
+                                </div>
+                                <div class="col-3 col-sm-3">
+                                    <input class="form-check-input" name="patient[symptons][dairrhea]" type="checkbox" value="dairrhea" id="dairrhea">
+                                </div>
+                            </div>
+                        </div>   
+                    </div>
+                </div> 
                 <div id="signup_btn" class="p-2">
                     <button type="button" id="prevBtn" class="btn btn-primary" onclick="nextPrev(-1)">Previous</button>
                     <button type="button" id="nextBtn" class="btn btn-primary" onclick="nextPrev(1)">Next</button>
                 </div>
                 <div style="text-align:center;">
+                    <span class="step"></span>
                     <span class="step"></span>
                     <span class="step"></span>
                     <span class="step"></span>
@@ -310,6 +388,11 @@
           valid = false;
         }
       }
+      y = document.getElementsByTagName("textarea");
+        if (y[0].value == "") {
+          y[0].className += " invalid";
+          valid = false;
+        }
       if (valid) {
         document.getElementsByClassName("step")[currentTab].className += " finish";
       }
