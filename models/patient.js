@@ -1,11 +1,9 @@
 const mongoose=require('mongoose')
-      passportLocalMongoose=require('passport-local-mongoose')
 const patientSchema=new mongoose.Schema({
-    username:String,
-    password:String,
-    name:String,
-    email:String,
-    phone_no:Number,
+    patientid:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+    },
     address:{
         districtid:{
             type:mongoose.Schema.Types.ObjectId,
@@ -58,10 +56,6 @@ const patientSchema=new mongoose.Schema({
         dairrhea:Boolean,
     },
     spo2:Number,
-    role:{
-        type:String,
-        default:'PATIENT'
-    }, //notip
     dailydata:[{
         date:Date,
         time:String,
@@ -85,5 +79,4 @@ const patientSchema=new mongoose.Schema({
         ref:'Doctor'
     }//noti/p
 })
-patientSchema.plugin(passportLocalMongoose);
 module.exports=new mongoose.model('Patient',patientSchema)

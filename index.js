@@ -29,7 +29,7 @@ mongoose.connect(process.env.DBURL,connectionParams)
 const Patient=require('./models/Patient'),
       District=require('./models/District'),
       Doctor=require('./models/Doctor'),
-      Lab=require('./models/Lab')
+      User=require('./models/User')
 //////////////////////////// DB Setuo Ends //////////////////////////////////
 
 
@@ -43,18 +43,9 @@ app.use(require("express-session")({
 app.use(passport.initialize());
 
 app.use(passport.session());
-passport.use(new LocalStrategy(Patient.authenticate()));
-passport.serializeUser(Patient.serializeUser());
-passport.deserializeUser(Patient.deserializeUser());
-passport.use(new LocalStrategy(Doctor.authenticate()));
-passport.serializeUser(Doctor.serializeUser());
-passport.deserializeUser(Doctor.deserializeUser());
-passport.use(new LocalStrategy(Lab.authenticate()));
-passport.serializeUser(Lab.serializeUser());
-passport.deserializeUser(Lab.deserializeUser());
-passport.use(new LocalStrategy(District.authenticate()));
-passport.serializeUser(District.serializeUser());
-passport.deserializeUser(District.deserializeUser());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req,res,next){
 	res.locals.currentUser=req.user;
@@ -75,22 +66,64 @@ const roles ={
 
 //////////////////////////// Roles ///////////////////////////////////////
 app.get("/",(req,res)=>{
-  res.redirect("/login")
+    //seed()
+    res.redirect("/login")
 
 })
-
+app.get("/home/:role",(req,res)=>{
+    if(req.params.role==roles.patient) res.send("Patient Home Page ")
+    if(req.params.role==roles.doctor) res.send("Doctor Home Page ")
+    if(req.params.role==roles.district) res.send("District Home Page ")
+    if(req.params.role==roles.lab) res.send("Lab Home Page ")
+})
 //////////////////////////// Auth Routes Starts //////////////////////////////
 app.get("/login",(req,res)=>{
     res.render("login")
 })
-
-
+app.post("/login",passport.authenticate("local",{
+	failureRedirect:"/login",
+	}),function(req,res){
+        if(req.user.role==roles.patient) res.redirect("/home/"+req.user.role)
+        if(req.user.role==roles.doctor) res.redirect("/home/"+req.user.role)
+        if(req.user.role==roles.district) res.redirect("/home/"+req.user.role)
+        if(req.user.role==roles.lab) res.redirect("/home/"+req.user.role)
+});
+app.get("/signup",(req,res)=>{
+    res.render("reg")
+})
+app.post("/signup",function(req,res){
+	var newUser=new User({
+        username:req.body.username,
+        role:req.body.role
+    });
+	User.register(newUser,req.body.password,function(err,user){
+		if(err){
+			console.log(err);
+			return res.render("reg");
+		}
+		passport.authenticate("local")(req,res,function(){
+			res.redirect("/login");
+		});
+	});
+})
+app.get("/logout",function(req,res){
+	req.logout();
+	res.redirect("/admin");
+});
 
 //////////////////////////// Auth Routes Ends ////////////////////////////////
 app.listen(process.env.PORT||3000,()=>{
     console.log("Server started at port 3000")
 })
 
-app.get("/signup",(req,res)=>{
-    res.render("signup")
-})
+function seed(){
+    var newuser=new User({
+        username:'adarsh',
+        password:'adarsh',
+        role:'PATIRNT'
+    })
+    newuser.save((err,res)=>{
+        if(err) console.log(err)
+        else console.log(res)
+    })
+}

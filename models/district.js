@@ -1,11 +1,5 @@
 const mongoose=require('mongoose')
-      passportLocalMongoose=require('passport-local-mongoose')
 const districtSchema=new mongoose.Schema({
-    username:String,
-    password:String,
-    name:String,
-    phone_no:Number,
-    email:String,
     patientid:[
         {
             type:mongoose.Schema.Types.ObjectId,
@@ -28,11 +22,6 @@ const districtSchema=new mongoose.Schema({
             },
             status:String,
         }
-    ],
-    role:{
-        type:String,
-        default:'DISTRICT'
-    }
+    ]
 })
-districtSchema.plugin(passportLocalMongoose);
 module.exports=new mongoose.model('District',districtSchema)
