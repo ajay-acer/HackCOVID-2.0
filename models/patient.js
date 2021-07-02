@@ -61,7 +61,7 @@ const patientSchema=new mongoose.Schema({
         time:String,
         spo2:Number,
         fever:Boolean,
-        body_temperature:Boolean,
+        body_temperature:Number,
         chills:Boolean,
         cough:Boolean,
         fatigue:Boolean,

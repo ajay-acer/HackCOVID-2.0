@@ -56,7 +56,19 @@ input.invalid,textarea.invalid {
     border: 2px solid aquamarine;
     background-color: whitesmoke;
 }
-
+ .switch-toggle input {
+   position: absolute;
+   opacity: 0;
+ }
+ .switch-toggle input + label {
+   padding: 7px;
+   color: rgb(14, 11, 11);
+   cursor: pointer;
+ }
+ .switch-toggle input:checked + label {
+   display: inline;
+   background-color: #00BFA6;
+ }
 
 
 
