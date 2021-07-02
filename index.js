@@ -70,11 +70,23 @@ app.get("/",(req,res)=>{
     res.redirect("/login")
 
 })
-app.get("/home/:role",(req,res)=>{
-    if(req.params.role==roles.patient) res.send("Patient Home Page ")
-    if(req.params.role==roles.doctor) res.send("Doctor Home Page ")
-    if(req.params.role==roles.district) res.send("District Home Page ")
-    if(req.params.role==roles.lab) res.send("Lab Home Page ")
+app.get("/home/:role/:id",isLoggedIn,(req,res)=>{
+    if(req.params.role==roles.patient){
+        if(req.user.role==roles.patient && req.params.id==req.user._id) res.send("Patient Home Page ")
+        else res.sendStatus(401)
+    } 
+    if(req.params.role==roles.doctor){
+        if(req.user.role==roles.doctor && req.params.id==req.user._id) res.send("Doctor Home Page ")
+        else res.sendStatus(401)
+    } 
+    if(req.params.role==roles.district){
+        if(req.user.role==roles.district && req.params.id==req.user._id) res.send("District Home Page ")
+        else res.sendStatus(401)
+    } 
+    if(req.params.role==roles.lab){
+        if(req.user.role==roles.lab && req.params.id==req.user._id) res.send("Lab Home Page ")
+        else res.sendStatus(401)
+    }
 })
 //////////////////////////// Auth Routes Starts //////////////////////////////
 app.get("/login",(req,res)=>{
@@ -83,10 +95,10 @@ app.get("/login",(req,res)=>{
 app.post("/login",passport.authenticate("local",{
 	failureRedirect:"/login",
 	}),function(req,res){
-        if(req.user.role==roles.patient) res.redirect("/home/"+req.user.role)
-        if(req.user.role==roles.doctor) res.redirect("/home/"+req.user.role)
-        if(req.user.role==roles.district) res.redirect("/home/"+req.user.role)
-        if(req.user.role==roles.lab) res.redirect("/home/"+req.user.role)
+        if(req.user.role==roles.patient) res.redirect("/home/"+req.user.role+"/"+req.user._id)
+        if(req.user.role==roles.doctor) res.redirect("/home/"+req.user.role+"/"+req.user._id)
+        if(req.user.role==roles.district) res.redirect("/home/"+req.user.role+"/"+req.user._id)
+        if(req.user.role==roles.lab) res.redirect("/home/"+req.user.role+"/"+req.user._id)
 });
 app.get("/signup",(req,res)=>{
     res.render("reg")
@@ -108,7 +120,7 @@ app.post("/signup",function(req,res){
 })
 app.get("/logout",function(req,res){
 	req.logout();
-	res.redirect("/admin");
+	res.redirect("/");
 });
 
 //////////////////////////// Auth Routes Ends ////////////////////////////////
@@ -126,4 +138,9 @@ function seed(){
         if(err) console.log(err)
         else console.log(res)
     })
+}
+function isLoggedIn(req,res,next){
+	if(req.isAuthenticated())
+		return next();
+	res.redirect("/login");
 }
