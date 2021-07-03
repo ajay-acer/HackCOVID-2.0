@@ -3,9 +3,9 @@
     <!-- Sidebar  -->
     <nav id="sidebar">
         <div class="sidebar-header">
-            <h3>Home Qurantine</h3>
+            <img class="img-fluid rounded-pill" src="https://thumbs.dreamstime.com/z/stay-home-quarantine-your-flying-viruses-coronavirus-pandemic-social-distance-self-isolation-to-stop-outbreak-176660220.jpg" alt="" height="70" width="81">
         </div>
-        <ul class="list-unstyled components" id="tabc"></ul>
+        <ul class="list-unstyled components text-center" id="tabc"></ul>
     </nav>
     <!-- Page Content  -->
     <div id="content">
@@ -110,9 +110,9 @@
                         <input class="form-check-input mx-1" type="radio" name="patient[dailydata][dairrhea]" value="medium" checked>Medium</input>
                         <input class="form-check-input mx-1" type="radio" name="patient[dailydata][dairrhea]" value="high">High</input>
                     </div>
-                    <div class="col-12 col-sm-6 col-md-3" id="dayinput">
+                    <div class="col-12 col-sm-6 col-md-3">
                         <label for="dairrhea" class="col-form-label"><b>Day</b></label><br>
-                        <input name="patient[dailydata][day]" type="number" class="form-control" id="day">
+                        <input name="patient[dailydata][day]" type="text" class="form-control" id="day" readonly>
                     </div>
                 </div>
                 <div class="row text-center p-2">
@@ -143,7 +143,7 @@
 </script>
 <script>
     var std = new Date("06/25/2021"); 
-    var syd = new Date();
+    var syd = new Date("07/09/2021");
     var diff= syd.getTime() - std.getTime();
     var diff_days =parseInt(diff / (1000 * 3600 * 24));
     var x="";
@@ -151,6 +151,7 @@
     for (i=1; i<diff_days; i++) {
         x = x+ "<li><a href=#homeSubmenu>Day "+i+"</a></li>"
     }
+    
     x = x+ "<li class="+"active><a href=#homeSubmenu>Day "+i+"</a></li>"
     document.getElementById("tabc").innerHTML = x;
     document.getElementById("review").disabled = true;
@@ -178,6 +179,5 @@
         elements[2].disabled=false;
     }
     document.getElementById('day').value = diff_days;
-    document.getElementById('day').disabled=true;
 </script>
 <%- include("partials/footer") %>
