@@ -145,3 +145,11 @@ function isLoggedIn(req,res,next){
 	res.redirect("/login");
 }
 
+app.get("/ajay",(req,res)=>{
+    res.render("demo")
+})
+
+app.post("/ajay",(req,res)=>{
+    console.log(req.body)
+    res.redirect("/ajay")
+})
