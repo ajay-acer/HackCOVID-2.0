@@ -163,8 +163,22 @@ function isLoggedIn(req,res,next){
 		return next();
 	res.redirect("/login");
 }
-
-// app.get("/ajay",(req,res)=>{
+function isPatient(req,res,next){
+    if(req.user.role===roles.patient)
+        return next();
+    res.sendStatus(401)
+}
+function isDoctor(req,res,next){
+    if(req.user.role===roles.doctor)
+        return next();
+    res.sendStatus(401)
+}
+function isUser(req,res,next){
+    if(req.user._id===req.params.id)
+        return next();
+    res.sendStatus(401)
+}
+// app.get("/ajay",isLoggedIn,isDoctor,(req,res)=>{
 //     res.render("demo")
 // })
 
