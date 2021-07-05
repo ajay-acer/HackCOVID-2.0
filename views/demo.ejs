@@ -3,20 +3,307 @@
     <!-- Sidebar  -->
     <nav id="sidebar">
         <div class="sidebar-header">
-            <h3>Home Qurantine</h3>
+            <img class="img-fluid rounded-pill" src="https://thumbs.dreamstime.com/z/stay-home-quarantine-your-flying-viruses-coronavirus-pandemic-social-distance-self-isolation-to-stop-outbreak-176660220.jpg" alt="" height="70" width="81">
         </div>
-        <ul class="list-unstyled components" id="tabc"></ul>
+        <ul class="list-unstyled components text-center">
+            <div id="myDiv">
+                <% var syd = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate()); %>
+            <% var std = new Date(new Date(patientdata[0].startdate).getFullYear(),new Date(patientdata[0].startdate).getMonth() , new Date(patientdata[0].startdate).getDate()); %>
+            <% var diff= syd.getTime() - std.getTime(); %>
+            <% var diff_days =(diff /(1000 * 3600 * 24)); %>
+            <% for(var i=0; i< diff_days; i++) { %>
+                <li><a href="#" class="btna" onclick="openForm('homeSubmenu<%= i %>')">Day <%= i+1 %></a></li>
+            <% } %>
+            <li><a class="btna active" href="#" onclick="openForm('homeSubmenu<%= i %>')">Day <%= i+1 %></a></li>
+            </div>
+            
+        </ul>
     </nav>
     <!-- Page Content  -->
     <div id="content">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #00BFA6;">
             <div class="container-fluid">
                 <button type="button" id="sidebarCollapse" class="btn btn-info">
                     <i class="fas fa-align-left"></i>
                 </button>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-danger" href="#"><i class="fa fa-ambulance" aria-hidden="true"></i> Emergency</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Log out</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </nav>
-        <div id="homeSubmenu">
+        </nav>   
+        <% for(var j=0;j< diff_days;j++) { %>
+        <div id="homeSubmenu<%= j %>" class="tabcontent" style="display: none;">
+            <% for(var k=0;k< patientdata[0].dailydata.length;k++) { %>
+                <% if (patientdata[0].dailydata[k].day == (j+1)) { %>
+                    <form action="">
+                        <fieldset disabled>
+                            <div class="row p-2 justify-content-center">
+                                <div class="col-12 col-sm-9 col-md-6 switch-toggle switch-candy">
+                                    <input id="morning" value="morning" type="radio"
+                                        <% if (patientdata[0].dailydata[k].time === "morning") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >
+                                    <label for="morning" onclick="">Morning</label>
+                                    <input id="afternoon" value="afternoon" type="radio"
+                                        <% if (patientdata[0].dailydata[k].time === "afternoon") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >
+                                    <label for="afternoon" onclick="">Afternoon</label>
+                                    <input id="evening" value="evening" type="radio"
+                                        <% if (patientdata[0].dailydata[k].time === "evening") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >
+                                    <label for="evening" onclick="">Evening</label>
+                                    <a></a>
+                                </div>
+                            </div>
+                            <div class="row p-2">
+                                <div class="col-12 col-sm-6">
+                                    <label for="spo2" class="col-form-label"><b>SPo2</b></label>
+                                    <input name="patient[dailydata][spo2]" type="number" class="form-control" id="spo2" value="<%= patientdata[0].dailydata[k].spo2 %>" required>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <label for="body_temperature" class="col-form-label"><b>Body temperature(&#8451;)</b></label>
+                                    <input name="patient[dailydata][body_temperature]" type="number" class="form-control" id="body_temperature" value="<%= patientdata[0].dailydata[k].body_temperature %>" required>
+                                </div>
+                            </div>
+                            <div class="row p-2">
+                                <div class="col-12 col-sm-6 col-md-3">
+                                    <label for="fever" class="col-form-label"><b>Fever</b></label><br>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][fever]" value="low"
+                                        <% if (patientdata[0].dailydata[k].fever === "low") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >Low</input>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][fever]" value="medium"
+                                        <% if (patientdata[0].dailydata[k].fever === "medium") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >Medium</input>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][fever]" value="high"
+                                        <% if (patientdata[0].dailydata[k].fever === "high") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >High</input>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-3">
+                                    <label for="chills" class="col-form-label"><b>Chills</b></label><br>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][chills]" value="low"
+                                        <% if (patientdata[0].dailydata[k].chills === "low") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >Low</input>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][chills]" value="medium"
+                                        <% if (patientdata[0].dailydata[k].chills === "medium") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >Medium</input>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][chills]" value="high"
+                                        <% if (patientdata[0].dailydata[k].chills === "high") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >High</input>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-3">
+                                    <label for="cough" class="col-form-label"><b>Cough</b></label><br>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][cough]" value="low"
+                                        <% if (patientdata[0].dailydata[k].cough === "low") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >Low</input>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][cough]" value="medium"
+                                        <% if (patientdata[0].dailydata[k].cough === "medium") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >Medium</input>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][cough]" value="high"
+                                        <% if (patientdata[0].dailydata[k].cough === "high") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >High</input>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-3">
+                                    <label for="fatigue" class="col-form-label"><b>Fatigue</b></label><br>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][fatigue]" value="low"
+                                        <% if (patientdata[0].dailydata[k].fatigue === "low") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >Low</input>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][fatigue]" value="medium"
+                                        <% if (patientdata[0].dailydata[k].fatigue === "medium") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >Medium</input>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][fatigue]" value="high"
+                                        <% if (patientdata[0].dailydata[k].fatigue === "high") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >High</input>
+                                </div>
+                            </div>
+                            <div class="row p-2">
+                                <div class="col-12 col-sm-6 col-md-3">
+                                    <label for="muscle_body_aches" class="col-form-label"><b>Muscle body aches</b></label><br>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][muscle_body_aches]" value="low"
+                                        <% if (patientdata[0].dailydata[k].muscle_body_aches === "low") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >Low</input>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][muscle_body_aches]" value="medium"
+                                        <% if (patientdata[0].dailydata[k].muscle_body_aches === "medium") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >Medium</input>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][muscle_body_aches]" value="high"
+                                        <% if (patientdata[0].dailydata[k].muscle_body_aches === "high") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >High</input>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-3">
+                                    <label for="headache" class="col-form-label"><b>Headache</b></label><br>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][headache]" value="low"
+                                        <% if (patientdata[0].dailydata[k].headache === "low") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >Low</input>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][headache]" value="medium"
+                                        <% if (patientdata[0].dailydata[k].headache === "medium") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >Medium</input>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][headache]" value="high"
+                                        <% if (patientdata[0].dailydata[k].headache === "high") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >High</input>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-3">
+                                    <label for="taste_smell_loss" class="col-form-label"><b>Taste smell loss</b></label><br>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][taste_smell_loss]" value="low"
+                                        <% if (patientdata[0].dailydata[k].taste_smell_loss === "low") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >Low</input>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][taste_smell_loss]" value="medium"
+                                        <% if (patientdata[0].dailydata[k].taste_smell_loss === "medium") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >Medium</input>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][taste_smell_loss]" value="high"
+                                        <% if (patientdata[0].dailydata[k].taste_smell_loss === "high") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >High</input>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-3">
+                                    <label for="sore_throat" class="col-form-label"><b>Sore throat</b></label><br>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][sore_throat]" value="low"
+                                        <% if (patientdata[0].dailydata[k].sore_throat === "low") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >Low</input>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][sore_throat]" value="medium"
+                                        <% if (patientdata[0].dailydata[k].sore_throat === "medium") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >Medium</input>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][sore_throat]" value="high"
+                                        <% if (patientdata[0].dailydata[k].sore_throat === "high") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >High</input>
+                                </div>
+                            </div>
+                            <div class="row p-2">
+                                <div class="col-12 col-sm-6 col-md-3">
+                                    <label for="runny_nose" class="col-form-label"><b>Runny nose</b></label><br>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][runny_nose]" value="low"
+                                        <% if (patientdata[0].dailydata[k].runny_nose === "low") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >Low</input>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][runny_nose]" value="medium"
+                                        <% if (patientdata[0].dailydata[k].runny_nose === "medium") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >Medium</input>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][runny_nose]" value="high"
+                                        <% if (patientdata[0].dailydata[k].runny_nose === "high") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >High</input>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-3">
+                                    <label for="nausea" class="col-form-label"><b>Nausea</b></label><br>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][nausea]" value="low"
+                                        <% if (patientdata[0].dailydata[k].nausea === "low") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >Low</input>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][nausea]" value="medium"
+                                        <% if (patientdata[0].dailydata[k].nausea === "medium") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >Medium</input>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][nausea]" value="high"
+                                        <% if (patientdata[0].dailydata[k].nausea === "high") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >High</input>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-3">
+                                    <label for="dairrhea" class="col-form-label"><b>Dairrhea</b></label><br>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][dairrhea]" value="low"
+                                        <% if (patientdata[0].dailydata[k].dairrhea === "low") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >Low</input>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][dairrhea]" value="medium"
+                                        <% if (patientdata[0].dailydata[k].dairrhea === "medium") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >Medium</input>
+                                    <input class="form-check-input mx-1" type="radio" name="patient[dailydata][dairrhea]" value="high"
+                                        <% if (patientdata[0].dailydata[k].dairrhea === "high") {%>
+                                        <%= "checked" %>
+                                        <% } %>
+                                    >High</input>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-3">
+                                    <label for="day" class="col-form-label"><b>Day</b></label><br>
+                                    <input name="patient[dailydata][day]" type="number" class="form-control" id="day" value=<%= patientdata[0].dailydata[k].day %>>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <h3>Doctor's Review</h3>
+                                <div class="form-group">
+                                    <textarea rows="5" class="form-control" id="review" name="patient[dailydata][review]" readonly><%=patientdata[0].dailydata[k].review %></textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                <% } %>
+            <% } %>
+        </div>
+        <% } %>
+        <div id="homeSubmenu<%= j %>" class="tabcontent" style="display: block;">
             <form action="/home/PATIENT/<%=user._id%>" method="POST">
                 <div class="row p-2 justify-content-center">
                     <div class="col-12 col-sm-9 col-md-6 switch-toggle switch-candy">
@@ -32,11 +319,11 @@
                 <div class="row p-2">
                     <div class="col-12 col-sm-6">
                         <label for="spo2" class="col-form-label"><b>SPo2</b></label>
-                        <input name="patient[dailydata][spo2]" type="number" class="form-control" id="spo2">
+                        <input name="patient[dailydata][spo2]" type="number" class="form-control" id="spo2" required>
                     </div>
                     <div class="col-12 col-sm-6">
                         <label for="body_temperature" class="col-form-label"><b>Body temperature(&#8451;)</b></label>
-                        <input name="patient[dailydata][body_temperature]" type="number" class="form-control" id="body_temperature">
+                        <input name="patient[dailydata][body_temperature]" type="number" class="form-control" id="body_temperature" required>
                     </div>
                 </div>
                 <div class="row p-2">
@@ -110,9 +397,9 @@
                         <input class="form-check-input mx-1" type="radio" name="patient[dailydata][dairrhea]" value="medium" checked>Medium</input>
                         <input class="form-check-input mx-1" type="radio" name="patient[dailydata][dairrhea]" value="high">High</input>
                     </div>
-                    <div class="col-12 col-sm-6 col-md-3" id="dayinput">
-                        <label for="dairrhea" class="col-form-label"><b>Day</b></label><br>
-                        <input name="patient[dailydata][day]" type="number" class="form-control" id="day" readonly>
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <label for="day" class="col-form-label"><b>Day</b></label><br>
+                        <input name="patient[dailydata][day]" type="number" class="form-control" id="day" value=<%= i+1 %> readonly>
                     </div>
                 </div>
                 <div class="row text-center p-2">
@@ -121,16 +408,18 @@
                     </div>
                 </div>
             </form>
-            <h3>Doctor's Review</h3>
-            <form action="">
-                <div class="form-group">
-                    <textarea rows="5" class="form-control" id="review" name="patient[dailydata][review]"></textarea>
-                </div>
-                <div class="p-2 text-center">
-                    <button type="submit" id="review_sub" class="shadow btn btn-dark btn-lg rounded-pill">Submit</button>
-                </div>
-            </form>
-    </div>
+            <% if(user.role==='DOCTOR') { %>
+                <h3>Doctor's Review</h3>
+                <form action="">
+                    <div class="form-group">
+                        <textarea rows="5" class="form-control" id="address" name="address" disabled></textarea>
+                    </div>
+                    <div class="p-2 text-center">
+                        <button type="submit" class="shadow btn btn-dark btn-lg rounded-pill" disabled>Submit</button>
+                    </div>
+                </form>
+            <% } %>
+        </div>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -142,41 +431,40 @@
     });
 </script>
 <script>
-    var std = new Date("06/25/2021"); 
-    var syd = new Date();
-    var diff= syd.getTime() - std.getTime();
-    var diff_days =parseInt(diff / (1000 * 3600 * 24));
-    var x="";
-    let i;
-    for (i=1; i<diff_days; i++) {
-        x = x+ "<li><a href=#homeSubmenu>Day "+i+"</a></li>"
+    function openForm(formId) {
+      var i, tabcontent;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      document.getElementById(formId).style.display = "block";
     }
-    x = x+ "<li class="+"active><a href=#homeSubmenu>Day "+i+"</a></li>"
-    document.getElementById("tabc").innerHTML = x;
-    document.getElementById("review").disabled = true;
-    document.getElementById("review_sub").disabled = true;
+    </script>
+<script>
+    // Add active class to the current button (highlight it)
+    var header = document.getElementById("myDiv");
+    var btns = header.getElementsByClassName("btna");
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].addEventListener("click", function() {
+      var current = document.getElementsByClassName("active");
+      current[0].className = current[0].className.replace(" active", "");
+      this.className += " active";
+      });
+    }
+    </script>
+<script>
     var time=new Date();
-    x=time.getHours();
+    var x=time.getHours();
     var elements = document.getElementsByName('patient[dailydata][time]');
     if(x<12)
     {
         elements[0].checked = true;
-        elements[0].disabled=false;
-        elements[1].disabled=true;
-        elements[2].disabled=true;
     }
     if(x>=12 && x<16){
         elements[1].checked = true;
-        elements[0].disabled=true;
-        elements[1].disabled=false;
-        elements[2].disabled=true;
     }
     if(x>=16){
         elements[2].checked = true; 
-        elements[0].disabled=true;
-        elements[1].disabled=true;
-        elements[2].disabled=false;
     }
-    document.getElementById('day').value = diff_days;
 </script>
 <%- include("partials/footer") %>
