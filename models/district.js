@@ -22,6 +22,11 @@ const districtSchema=new mongoose.Schema({
             },
             status:String,
         }
-    ]
+    ],
+    district:String,
+    districtid:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+    }
 })
 module.exports=new mongoose.model('District',districtSchema)

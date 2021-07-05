@@ -5,10 +5,7 @@ const patientSchema=new mongoose.Schema({
         ref:'User'
     },
     address:{
-        districtid:{
-            type:mongoose.Schema.Types.ObjectId,
-            ref:'District'
-        }, // noti/p
+        district:String,
         taluk:String,
         state:String,
         street_name:String,

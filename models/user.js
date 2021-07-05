@@ -7,10 +7,7 @@ const userSchema=new mongoose.Schema({
     phone_no:Number,
     email:String,
     role:String,
-    district:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'District'
-    }
+    district:String
 })
 userSchema.plugin(passportLocalMongoose);
 module.exports=new mongoose.model('User',userSchema)
