@@ -120,7 +120,7 @@ app.post("/login",passport.authenticate("local",{
         if(req.user.role==roles.lab) res.redirect("/home/"+req.user.role+"/"+req.user._id)
 });
 app.get("/signup",(req,res)=>{
-    res.render("reg")
+    res.render("signup")
 })
 app.post("/signup",function(req,res){
 	var newUser=new User({
@@ -187,3 +187,7 @@ function isLoggedIn(req,res,next){
 // app.get("/test",(req,res)=>{
 //     adddate()
 // })
+
+app.get("/register",(req,res)=>{
+    res.render("register")
+})

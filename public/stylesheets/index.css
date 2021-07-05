@@ -49,21 +49,20 @@ input.invalid,textarea.invalid {
     margin: auto;
     width: 85%;
     padding-top: 20px;
-    
 }
 
 #districtcol{
     border: 2px solid aquamarine;
     background-color: whitesmoke;
 }
-.form-control:focus {
+.form-control:focus,.form-select:focus {
     border-color: #00BFA6;
     box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
 } 
 /* ---------------------------------------------------
    Toogle-switch
 ----------------------------------------------------- */
- .switch-toggle input {
+.switch-toggle input {
    position: absolute;
    opacity: 0;
  }
