@@ -92,7 +92,6 @@ input.invalid,textarea.invalid {
     border-radius: 25px;
 }
 .switch-candy a {
-    border: 1px solid rgb(51 51 51);
     border-radius: 35px;
     box-shadow: 0 1px 1px rgb(0 0 0 / 20%), inset 0 1px 1px rgb(255 255 255 / 45%);
     background-color: #00BFA6; 
@@ -111,18 +110,21 @@ a:focus {
 }
 
 .navbar {
-    padding: 15px 10px;
+    padding: 15px 0px;
     background: #fff;
     border: none;
-    border-radius: 0;
     margin-bottom: 40px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 50px;
 }
 
 .navbar-btn {
     box-shadow: none;
     outline: none !important;
     border: none;
+}
+.text-danger {
+    color: #f2061d!important;
 }
 /* ---------------------------------------------------
     SIDEBAR STYLE
@@ -156,15 +158,19 @@ a:focus {
 }
 #sidebar ul li a:hover {
     color: black;
-    background: #fff;
+    background: #9ef7eb;
 }
 
-#sidebar ul li.active>a{
+#sidebar ul li a.active{
     color: black;
     background: #03fddc;
 }
 
-
+.navbar-toggler{
+    padding-top: 1.5%;
+    padding-bottom:1.5%;
+    background-color: aquamarine;
+}
 /* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */

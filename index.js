@@ -72,7 +72,16 @@ app.get("/",(req,res)=>{
 })
 app.get("/home/:role/:id",isLoggedIn,(req,res)=>{
     if(req.params.role==roles.patient){
-        if(req.user.role==roles.patient && req.params.id==req.user._id) res.send("Patient Home Page ")
+        if(req.user.role==roles.patient && req.params.id==req.user._id){
+            Patient.find({patientid:req.params.id},(err,patientdetails)=>{
+                if(err) console.log(err)
+                else{
+                    console.log(patientdetails)
+                    res.render("demo",{user:req.user,patientdata:patientdetails})
+                } 
+            })
+            
+        }
         else res.sendStatus(401)
     } 
     if(req.params.role==roles.doctor){
@@ -88,6 +97,16 @@ app.get("/home/:role/:id",isLoggedIn,(req,res)=>{
         else res.sendStatus(401)
     }
 })
+
+app.post("/home/PATIENT/:id",(req,res)=>{
+    console.log(req.body)
+    Patient.findOneAndUpdate({patientid:req.params.id},{$push:{dailydata:req.body.patient.dailydata}},{upsert:true},(err,result)=>{
+        if(err) console.log(err)
+        else console.log(result)
+    })
+    res.redirect("/home/PATIENT/"+req.params.id)
+})
+
 //////////////////////////// Auth Routes Starts //////////////////////////////
 app.get("/login",(req,res)=>{
     res.render("login")
@@ -145,11 +164,26 @@ function isLoggedIn(req,res,next){
 	res.redirect("/login");
 }
 
-app.get("/ajay",(req,res)=>{
-    res.render("demo")
-})
+// app.get("/ajay",(req,res)=>{
+//     res.render("demo")
+// })
 
-app.post("/ajay",(req,res)=>{
-    console.log(req.body)
-    res.redirect("/ajay")
-})
+// app.post("/ajay",(req,res)=>{
+//     console.log(req.body)
+//     res.redirect("/ajay")
+// })
+
+// function adddate()
+// {
+//     var startdate=Date.now();
+//     console.log(startdate)
+//     var enddate=startdate+14
+//     console.log(enddate)
+//     Patient.findOneAndUpdate({patientid:'60dd9413eccd6105ccc80044'},{startdate:startdate,enddate:enddate},(err,res)=>{
+//         if(err) console.log(err)
+//         else console.log(res)
+//     })
+// }
+// app.get("/test",(req,res)=>{
+//     adddate()
+// })
