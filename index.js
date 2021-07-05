@@ -66,7 +66,7 @@ const roles ={
 
 //////////////////////////// Roles ///////////////////////////////////////
 app.get("/",(req,res)=>{
-    //seed()
+    seed()
     res.redirect("/login")
 
 })
@@ -107,6 +107,17 @@ app.post("/home/PATIENT/:id",(req,res)=>{
     res.redirect("/home/PATIENT/"+req.params.id)
 })
 
+app.get("/emergency",isLoggedIn,isPatient,(req,res)=>{
+    var newRequest={
+        request_time:Date.now(),
+        patientid:req.user._id,
+        status:'Requested'
+    }
+    District.findOneAndUpdate({district:req.user.district},{$push:{sos_requests:newRequest}},(err,result)=>{
+        if(err) console.log(err)
+        else res.redirect("/home/PATIENT/"+req.user._id)
+    })
+})
 //////////////////////////// Auth Routes Starts //////////////////////////////
 app.get("/login",(req,res)=>{
     res.render("login")
@@ -148,10 +159,10 @@ app.listen(process.env.PORT||3000,()=>{
 })
 
 function seed(){
-    var newuser=new User({
-        username:'adarsh',
-        password:'adarsh',
-        role:'PATIRNT'
+    var newuser=new District({
+        patientid:["60dd9413eccd6105ccc80044"],
+        districtid:"60e2b03ebe56e627581eb4e0",
+        district:"Udupi"
     })
     newuser.save((err,res)=>{
         if(err) console.log(err)
