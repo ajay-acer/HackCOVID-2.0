@@ -1,0 +1,66 @@
+<%- include("partials/header") %>
+<div class="container-fluid" style="padding: 27px 20px;">
+    <div class="row shadow-lg rounded align-items-center justify-content-center p-5" id="signuprow">
+            <div class="p-2 col-12 col-sm-3 text-center">
+                <h2 class="p-2">Register here</h2>
+                <img class="img-fluid p-2" src="https://lirp.cdn-website.com/69c0b277/dms3rep/multi/opt/Home+care+coronavirus+%28covid-19%29-1440w.png">
+                <a href="/login" class="p-2 shadow rounded-pill btn btn-primary " id="login-a"> Log in </a>
+            </div>
+            <div class="p-3 col-12 col-sm-8" id="signupcol">
+                <h2 class="text-center p-2">Register</h2>
+                <form action="/" method="POST">
+                    <div class="row p-2">
+                        <div class="col-12 col-sm-6">
+                            <label for="username" class="col-form-label">User name</label>
+                            <input name="patient[username]" type="text" class="form-control" id="username" required>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <label for="password" class="col-form-label">Password</label>
+                            <input name="password" type="password" class="form-control" id="password" required>
+                        </div>
+                    </div> 
+                    <div class="row p-2">
+                        <div class="col-12 col-sm-6">
+                            <label for="name" class="col-form-label">Name</label>
+                            <input name="patient[name]" type="text" class="form-control" id="name" required>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <label for="phone_no" class="col-form-label">Phone number</label>
+                            <input name="patient[phone_no]" type="number" class="form-control" id="phone_no" required>
+                        </div>
+                    </div>
+                    <div class="row p-2">
+                        <div class="col-12 col-sm-6">
+                            <label for="email" class="col-form-label">Email</label>
+                            <input name="patient[email]" type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <label for="district" class="col-form-label">District</label>
+                            <select name="patient[district]" id="district" class="form-select" required>
+                                <option value="dk">Dakshina Kannada</option>
+                                <option value="up">Udupi</option>
+                                <option value="ban">Bangalore</option>
+                                <option value="mysore">Mysore</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row p-2 justify-content-center">
+                        <div class="col-12 col-sm-6">
+                            <label for="district" class="col-form-label">Role</label>
+                            <select name="patient[district]" id="district" class="form-select" required>
+                                <option value="patient">Patient</option>
+                                <option value="district">District</option>
+                                <option value="doctor">Doctor</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row text-center p-2">
+                        <div class="p-3">
+                            <button type="submit" class="shadow btn btn-dark btn-lg rounded-pill">Register</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+</div>
+</div>
+<%- include("partials/footer") %>
