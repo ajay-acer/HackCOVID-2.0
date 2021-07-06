@@ -6,7 +6,7 @@
             <img class="img-fluid p-2" src="https://lirp.cdn-website.com/69c0b277/dms3rep/multi/opt/Home+care+coronavirus+%28covid-19%29-1440w.png">
             <a href="/login" class="p-2 shadow rounded-pill btn btn-primary " id="login-a"> Log in </a>
         </div>
-        <div class="p-2 col-12 col-sm-8" id="signupcol">
+        <div class="p-1 col-12 col-sm-8 mx-1" id="signupcol">
             <form action="" method="POST" id="regForm">
                 <div class="tab">
                     <div class="row p-2">
@@ -25,12 +25,12 @@
                     </div>
                     <div class="row p-2">
                         <div class="col-12 col-sm-6">
-                            <label for="name" class="col-form-label">Name</label>
-                            <input name="patient[name]" type="text" class="form-control" id="name" required>
+                            <label for="name" class="col-form-label">Caretaker's Name</label>
+                            <input name="patient[caretaker][name]" type="text" class="form-control" id="name" required>
                         </div>
                         <div class="col-12 col-sm-6">
-                            <label for="phone_no" class="col-form-label">Phone number</label>
-                            <input name="patient[phone_no]" type="number" class="form-control" id="phone_no" required>
+                            <label for="phone_no" class="col-form-label">Caretaker's phone no.</label>
+                            <input name="patient[caretaker][phoneno]" type="number" class="form-control" id="phone_no" required>
                         </div>
                     </div>
                     <h2 class="text-center p-2">Comordity Details</h2>
@@ -294,7 +294,7 @@
     </div>
 </div>
 <script>
-    var currentTab = 2; 
+    var currentTab = 0; 
     showTab(currentTab);
     
     function showTab(n) {
