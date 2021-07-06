@@ -1,50 +1,54 @@
 <%- include("partials/header") %>
-<div class="container " id="districtcontainer">
-    <form action="" method="POST">
-        <div class="row shadow-lg rounded align-items-center justify-content-center p-2" id="signuprow">
-            <div class="p-2 col-12 col-md-3 text-center">
-                <h2 class="p-2">Register</h2>
+<div class="container p-2" id="districtcontainer">
+        <div class="row shadow-lg rounded align-items-center justify-content-center p-5" id="signuprow">
+            <div class="p-5 col-12 col-md-3 text-center">
+                <h2 class="p-2">Doctor Register</h2>
                 <img class="img-fluid" src="../img/doctor.svg">
             </div>
-            <div class="p-2 col-12 col-md-8 rounded" id="districtcol">
-                <div class="row p-2 justify-content-center">
-                    <div class="col-12 col-md-5">
-                        <label for="username" class="col-form-label">User name</label>
-                        <input name="doctor[username]" type="text" class="form-control" id="username" required>
+            <div class="p-5 col-12 col-md-9 rounded" id="districtcol">
+                <h3 class="text-center p-2">Doctor details</h3>
+                <form action="" method="POST">
+                    <div class="row p-3 justify-content-center">
+                        <div class="col-12 col-md-6">
+                            <label for="username" class="col-form-label">User name</label>
+                            <input name="doctor[username]" type="text" class="form-control" id="username" required>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="password" class="col-form-label">Password</label>
+                            <input name="password" type="password" class="form-control" id="password" required>
+                        </div>
+                    </div> 
+                    <div class="row p-3 justify-content-center">
+                        <div class="col-12 col-md-6">
+                            <label for="name" class="col-form-label">Name</label>
+                            <input name="doctor[name]" type="text" class="form-control" id="name" required>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="phone_no" class="col-form-label">Phone number</label>
+                            <input name="doctor[phone_no]" type="number" class="form-control" id="phone_no" required>
+                        </div>
                     </div>
-                    <div class="col-12 col-md-5">
-                        <label for="password" class="col-form-label">Password</label>
-                        <input name="password" type="password" class="form-control" id="password" required>
+                    <div class="row p-3 justify-content-center">
+                        <div class="col-12 col-md-6">
+                            <label for="email" class="col-form-label">Email</label>
+                            <input name="doctor[email]" type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="district" class="col-form-label">District</label>
+                            <select name="doctor[district]" id="district" class="form-select" required>
+                                <option value="dk">Dakshina Kannada</option>
+                                <option value="up">Udupi</option>
+                                <option value="ban">Bangalore</option>
+                                <option value="mysore">Mysore</option>
+                            </select>
+                        </div>
                     </div>
-                </div> 
-                <div class="row p-2 justify-content-center">
-                    <div class="col-12 col-md-5">
-                        <label for="name" class="col-form-label">Name</label>
-                        <input name="doctor[name]" type="text" class="form-control" id="name" required>
-                    </div>
-                    <div class="col-12 col-md-5">
-                        <label for="phone_no" class="col-form-label">Phone number</label>
-                        <input name="doctor[phone_no]" type="number" class="form-control" id="phone_no" required>
-                    </div>
-                </div>
-                <div class="row p-2 justify-content-center">
-                    <div class="col-12 col-md-5">
-                        <label for="email" class="col-form-label">Email</label>
-                        <input name="doctor[email]" type="email" class="form-control" id="email" required>
-                    </div>
-                    <div class="col-12 col-sm-5">
-                        <label for="district" class="col-form-label">District</label>
-                        <select name="doctor[district]" id="district" class="form-select" required>
-                            <option value="dk">Dakshina Kannada</option>
-                            <option value="up">Udupi</option>
-                            <option value="ban">Bangalore</option>
-                            <option value="mysore">Mysore</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="p-2 text-center">
-                    <button type="submit" class="shadow btn btn-dark btn-lg rounded-pill">Submit</button>
-                </div>  
+                    <div class="row p-3 justify-content-center">
+                        <div class="p-4 text-center">
+                            <button type="submit" class="shadow btn btn-dark btn-lg rounded-pill">Submit</button>
+                        </div>
+                    </div>  
+                </form>
             </div>
         </div>
     </form>

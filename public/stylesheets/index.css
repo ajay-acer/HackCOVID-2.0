@@ -1,6 +1,7 @@
 html,body{
     height:100%;
     margin: 0;
+    background-color: floralwhite;
 }
 #loginbody{
     background-image: url('../img/login_wave.svg');
@@ -36,7 +37,7 @@ html,body{
 }
 #signupcol{
     border: 2px solid aquamarine;
-    background-color: whitesmoke;
+    background-color: floralwhite;
     border-radius: 2%;
 }
 #signupcontainer{
@@ -53,7 +54,7 @@ input.invalid,textarea.invalid {
 
 #districtcol{
     border: 2px solid aquamarine;
-    background-color: whitesmoke;
+    background-color: floralwhite;
 }
 .form-control:focus,.form-select:focus {
     border-color: #00BFA6;
@@ -179,6 +180,7 @@ a:focus {
     padding: 20px;
     min-height: 100vh;
     transition: all 0.3s;
+    background-color: floralwhite;
 }
 
 /* ---------------------------------------------------
@@ -201,5 +203,30 @@ a:focus {
     border-color: #00BFA6;
 }
 
+th,td {
+    border: 1px solid #068f7d;
+  }
+#doctable {
+    table-layout: fixed;
+    width: 100%; 
+  } 
 
+.table-dark {
+    --bs-table-bg: #00BFA6;
+    --bs-table-striped-bg: #5db9ad;
+    --bs-table-striped-color: #fff;
+    --bs-table-active-bg: #55e4d1;
+    --bs-table-active-color: #fff;
+    --bs-table-hover-bg: #06806f;
+    --bs-table-hover-color: #fff;
+    color: #fff;
+    border-color: #373b3e;
+}
+
+.modal-header {
+    background: #00BFA6; }
+.modal-content {
+    background: floralwhite; }
+.modal-footer {
+    background: #00BFA6; }
 
