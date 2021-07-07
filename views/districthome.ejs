@@ -3,21 +3,21 @@
     <!-- Sidebar  -->
     <nav id="sidebar">
         <div class="sidebar-header">
-            <h3>District</h3>
+            <h3>District NAME</h3>
         </div>
         <ul class="list-unstyled components text-center">
             <div id="myDiv">
                 <li>
-                    <a href="#" class=" btna active" onclick="openForm('labcontent')"><i class="fa fa-flask" aria-hidden="true"></i> Lab</a>
+                    <a href="#" class=" btna active" onclick="openForm('labcontent')"><b><i class="fa fa-flask" aria-hidden="true"></i> Lab</b></a>
                 </li>
                 <li>
-                    <a href="#" class="btna" onclick="openForm('patientcontent')"><i class="fas fa-procedures"></i>  Patients</a>
+                    <a href="#" class="btna" onclick="openForm('patientcontent')"><b><i class="fas fa-procedures"></i>  Patients</b></a>
                 </li>
                 <li>
-                    <a href="#" class="btna" onclick="openForm('sos')"><i class="fa fa-ambulance" aria-hidden="true"></i> SOS</a>
+                    <a href="#" class="btna" onclick="openForm('sos')"><b><i class="fa fa-ambulance" aria-hidden="true"></i> SOS</b></a>
                 </li>
                 <li>
-                    <a href="#" class="btna" onclick="openForm('doctorcontent')"><i class="fas fa-user-md"></i> Doctors</a>
+                    <a href="#" class="btna" onclick="openForm('doctorcontent')"><b><i class="fas fa-user-md"></i> Doctors</b></a>
                 </li>
             </div>
         </ul>
@@ -50,14 +50,13 @@
                 <tr>
                     <td>name</td>
                     <td>
-                        <form action="" method="post">
-                            <input class="btn btn-outline-success rounded-pill" type="submit" value="Remove">
-                        </form>
+                        <button type="button" class="btn btn-success rounded-pill p-2" data-bs-toggle="modal" data-bs-target="#removelab">
+                            <i class="fas fa-user-times"></i> Remove</button>
                     </td>
                 </tr>
             </table>
             <div class="p-2 text-center">
-                <button type="button" class="btn btn-info rounded-pill p-2" data-bs-toggle="modal" data-bs-target="#addlab">Add new lab</button>
+                <button type="button" class="btn btn-info rounded-pill p-2" data-bs-toggle="modal" data-bs-target="#addlab"><i class="fa fa-plus" aria-hidden="true"></i> Add new lab</button>
             </div>
         </div>
         <div id="patientcontent" class="tabcontent" style="display: none;">
@@ -100,23 +99,24 @@
                 <tr>
                     <td>name</td>
                     <td>
-                        <form action="" method="post">
-                            <input class="btn btn-outline-success rounded-pill" type="submit" value="Remove">
-                        </form>
+                        <button type="button" class="btn btn-success rounded-pill p-2" data-bs-toggle="modal" data-bs-target="#removedoc">
+                            <i class="fas fa-user-slash"></i> Remove</button>
                     </td>
                 </tr>
             </table>
             <div class="p-2 text-center">
-                <button type="button" class="btn btn-info rounded-pill p-2" data-bs-toggle="modal" data-bs-target="#adddoctor">Add new doctor</button>
+                <button type="button" class="btn btn-info rounded-pill p-2" data-bs-toggle="modal" data-bs-target="#adddoctor"><i class="fa fa-plus" aria-hidden="true"></i> Add new doctor</button>
             </div>
         </div>
     </div>
 
     <div class="modal fade" id="adddoctor" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-dialog  modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Add new Doctor</h5>
+
+                    <h5 class="modal-title" id="staticBackdropLabel">Add new Doctor<i class="fa fa-plus" aria-hidden="true"></i></h5>
+
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="/signup" method="POST">
@@ -148,28 +148,30 @@
                             </div>
                             <div class="col-12 col-sm-6">
                                 <label for="district" class="col-form-label">District</label>
-                                <select name="district" id="district" class="form-select" required>
-                                    <option value="dk">Dakshina Kannada</option>
-                                    <option value="up">Udupi</option>
-                                    <option value="ban">Bangalore</option>
-                                    <option value="mysore">Mysore</option>
-                                </select>
+
+                                <input name="doctor[district]" type="text" class="form-control" id="district" value="DK" readonly>
+                            </div>
+                        </div>
+                        <div class="row p-2" style="display: none;">
+                            <div class="col-12 col-sm-6">
+                                <label for="role" class="col-form-label">Role</label>
+                                <input name="user[role]" type="text" class="form-control" id="role" value="DOCTOR" readonly>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+                        <a class="btn btn-primary" href=""><i class="fa fa-paper-plane" aria-hidden="true"></i> Submit</a>
                     </div>
                 </form>
             </div>
         </div>
     </div>
     <div class="modal fade" id="addlab" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-dialog  modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Add new lab</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">Add new lab <i class="fa fa-plus" aria-hidden="true"></i></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="/signup" method="POST">
@@ -200,12 +202,52 @@
                                 <input name="email" type="email" class="form-control" id="email" required>
                             </div>
                         </div>
+                        <div class="row p-2" style="display: none;">
+                            <div class="col-12 col-sm-6">
+                                <label for="role" class="col-form-label">Role</label>
+                                <input name="user[role]" type="text" class="form-control" id="role" value="LAB" readonly>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+                        <a href="" class="btn btn-primary"><i class="fa fa-paper-plane" aria-hidden="true"></i> Submit</a>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="removedoc" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Remove Doctor <i class="fas fa-user-slash"></i></i></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Do you want to remove this doctor.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
+                    <a href=""  class="btn btn-primary"> Yes </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="removelab" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Remove Lab <i class="fas fa-user-times"></i></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Do you want to remove this Laboratory.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
+                    <a href=""  class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i> Yes </a>
+                </div>
             </div>
         </div>
     </div>
@@ -240,5 +282,15 @@
       this.className += " active";
       });
     }
+</script>
+<script>
+    $('#addlab').on('hidden.bs.modal', function () {
+    $(this).find('form').trigger('reset');
+})
+</script>
+<script>
+    $('#adddoctor').on('hidden.bs.modal', function () {
+    $(this).find('form').trigger('reset');
+})
 </script>
 <%- include("partials/footer") %>
