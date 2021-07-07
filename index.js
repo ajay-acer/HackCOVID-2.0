@@ -212,3 +212,7 @@ function isUser(req,res,next){
 // app.get("/test",(req,res)=>{
 //     adddate()
 // })
+
+app.get("/register",(req,res)=>{
+    res.render("districthome")
+})
