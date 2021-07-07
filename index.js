@@ -143,7 +143,8 @@ app.post("/signup",function(req,res){
         name:req.body.name,
         phone_no:req.body.phone_no,
         email:req.body.email,
-        district:req.body.district
+        district:req.body.district,
+        role:req.body.role
     })
 	User.register(newUser,req.body.password,function(err,user){
 		if(err){
