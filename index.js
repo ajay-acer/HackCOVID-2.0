@@ -8,6 +8,7 @@ const express=require('express')
 
 app.set("view engine","ejs")
 app.use(express.static("public"))
+app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended: true}))
 
 ///////////////////////////// DB Setuo Starts ////////////////////////////////
@@ -66,7 +67,7 @@ const roles ={
 
 //////////////////////////// Roles ///////////////////////////////////////
 app.get("/",(req,res)=>{
-    seed()
+    //seed()
     res.redirect("/login")
 
 })
@@ -85,11 +86,13 @@ app.get("/home/:role/:id",isLoggedIn,(req,res)=>{
         else res.sendStatus(401)
     } 
     if(req.params.role==roles.doctor){
-        if(req.user.role==roles.doctor && req.params.id==req.user._id) res.send("Doctor Home Page ")
+       
+        if(req.user.role==roles.doctor && req.params.id==req.user._id) res.render("doctorhome")
         else res.sendStatus(401)
     } 
     if(req.params.role==roles.district){
-        if(req.user.role==roles.district && req.params.id==req.user._id) res.send("District Home Page ")
+        console.log(req.user.role,req.user._id)
+        if(req.user.role==roles.district && req.params.id==req.user._id) res.render("districthome")
         else res.sendStatus(401)
     } 
     if(req.params.role==roles.lab){
@@ -131,21 +134,27 @@ app.post("/login",passport.authenticate("local",{
         if(req.user.role==roles.lab) res.redirect("/home/"+req.user.role+"/"+req.user._id)
 });
 app.get("/signup",(req,res)=>{
-    res.render("signup")
+    res.render("register")
 })
 app.post("/signup",function(req,res){
-	var newUser=new User({
+    // console.log(req.body)
+    var newUser =User({
         username:req.body.username,
-        role:req.body.role
-    });
+        name:req.body.name,
+        phone_no:req.body.phone_no,
+        email:req.body.email,
+        district:req.body.district
+    })
 	User.register(newUser,req.body.password,function(err,user){
 		if(err){
 			console.log(err);
 			return res.render("reg");
 		}
-		passport.authenticate("local")(req,res,function(){
-			res.redirect("/login");
-		});
+        passport.authenticate("local")(req,res,function(){
+            //console.log(req.user)
+            res.redirect("/login")
+        });
+        
 	});
 })
 app.get("/logout",function(req,res){
