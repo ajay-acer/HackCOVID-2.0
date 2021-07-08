@@ -87,12 +87,27 @@ app.get("/home/:role/:id",isLoggedIn,(req,res)=>{
     } 
     if(req.params.role==roles.doctor){
        
-        if(req.user.role==roles.doctor && req.params.id==req.user._id) res.render("doctorhome")
+        if(req.user.role==roles.doctor && req.params.id==req.user._id){
+            Doctor.find({doctorid:req.user._id},(err,doctor)=>{
+                if(err) console.log(err)
+                else res.render("doctorhome",{user:req.user,doctor:doctor[0]})
+            })
+            
+        } 
         else res.sendStatus(401)
     } 
     if(req.params.role==roles.district){
         console.log(req.user.role,req.user._id)
-        if(req.user.role==roles.district && req.params.id==req.user._id) res.render("districthome")
+        if(req.user.role==roles.district && req.params.id==req.user._id){
+            District.find({districtid:req.user._id},(err,district)=>{
+                if(err) console.log(err)
+                else {
+                    //console.log(district[0])
+                    res.render("districthome",{district:district[0]})
+                }
+            })
+            
+        } 
         else res.sendStatus(401)
     } 
     if(req.params.role==roles.lab){
@@ -146,23 +161,102 @@ app.post("/signup",function(req,res){
         district:req.body.district,
         role:req.body.role
     })
+    var role=newUser.role
 	User.register(newUser,req.body.password,function(err,user){
 		if(err){
 			console.log(err);
 			return res.render("reg");
 		}
         passport.authenticate("local")(req,res,function(){
-            //console.log(req.user)
-            res.redirect("/login")
+            //console.log('user',req.user)
+            if(role=="PATIENT"){
+                //console.log(role)
+                var newPatient=new Patient({patientid:req.user._id})
+                newPatient.save()
+                res.redirect("/signup/2")
+            }else if(role=="DOCTOR"){
+                var newDoctor=new Doctor({doctorid:req.user._id,district:req.user.district})
+                newDoctor.save()
+                //Add doctor to district Schema
+                District.findOneAndUpdate({district:req.user.district},{$push:{doctorid:req.user._id}},(err,result)=>{
+                    console.log('added doctor ',result)
+                })
+                res.redirect("/login")
+            }
+            else{
+                res.redirect("/login")
+            }
         });
-        
-	});
+    });
+    //console.log(role) 
 })
+
+app.get("/signup/2",(req,res)=>{
+    res.render("signup")
+})
+app.post("/signup/2",(req,res)=>{
+    console.log(req.body.patient)
+    console.log(req.user)
+    req.body.patient.address.district=req.user.district
+    Patient.findOneAndUpdate({patientid:req.user._id},req.body.patient,{new:true},(err,upPatient)=>{
+        if(err) console.log(err)
+        else{
+            console.log('Updated PAtient',upPatient)
+            //Add patient id to District Schema
+            District.findOneAndUpdate({district:req.body.patient.address.district},{$push:{patientid:upPatient.patientid}},{new:true},(err,result)=>{
+                if(err) console.log(err)
+                else{
+                    console.log('Added PAtient to district',result)
+                    //Allocate doctor to patient from the same district
+                    Doctor.findOneAndUpdate({district:result.district},{$push:{patientid:upPatient.patientid},$inc:{noofpatient:1}},{sort:{noofpatient:1},new:true},(err,doctors)=>{
+                        if(err) console.log(err)
+                        else{
+                            console.log("Alloted doctor to patient",doctors)
+                            //Add doctor id to patient Schema
+                            Patient.findOneAndUpdate({patientid:upPatient.patientid},{doctorid:doctors.doctorid},{new:true},(err,patient)=>{
+                                if(err) console.log(err)
+                                else console.log(patient)
+                            })
+                        }
+                    })
+                } 
+            })
+        }
+    })
+    res.redirect("/login")
+})
+
 app.get("/logout",function(req,res){
 	req.logout();
 	res.redirect("/");
 });
 
+app.get("/adddistrict",(req,res)=>{
+    res.render("district")
+})
+app.post("/adddistrict",(req,res)=>{
+    //console.log(req.body)
+    var districtUser=new User({
+        username: req.body.username,
+        name:req.body.name,
+        phone_no:req.body.phone_no,
+        email:req.body.email,
+        district:req.body.district,
+        role:req.body.role
+    })
+    User.register(districtUser,req.body.password,(err,result)=>{
+        if(err){
+            console.log(err)
+            return res.render("district")
+        }
+        passport.authenticate("local")(req,res,()=>{
+            //console.log(req.user)
+            var newDistrict=new District({district:req.user.name,districtid:req.user._id})
+            newDistrict.save()
+            res.redirect("/adddistrict")
+        })
+    })
+})
 //////////////////////////// Auth Routes Ends ////////////////////////////////
 app.listen(process.env.PORT||3000,()=>{
     console.log("Server started at port 3000")

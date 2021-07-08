@@ -7,11 +7,11 @@
             </div>
             <div class="p-4 col-12 col-md-9 rounded" id="districtcol">
                 <h3 class="p-4 text-center">District details</h3>
-                <form action="" method="POST">
+                <form action="/adddistrict" method="POST">
                     <div class="row p-3 justify-content-center">
                         <div class="col-12 col-md-6">
                             <label for="username" class="col-form-label">User name</label>
-                            <input name="district[username]" type="text" class="form-control" id="username" required>
+                            <input name="username" type="text" class="form-control" id="username" required>
                         </div>
                         <div class="col-12 col-md-6">
                             <label for="password" class="col-form-label">Password</label>
@@ -21,23 +21,23 @@
                     <div class="row p-3 justify-content-center">
                         <div class="col-12 col-md-6">
                             <label for="name" class="col-form-label">District Name</label>
-                            <input name="district[name]" type="text" class="form-control" id="name" required>
+                            <input name="name" type="text" class="form-control" id="name" required>
                         </div>
                         <div class="col-12 col-md-6">
                             <label for="phone_no" class="col-form-label">Phone number</label>
-                            <input name="district[phone_no]" type="number" class="form-control" id="phone_no" required>
+                            <input name="phone_no" type="number" class="form-control" id="phone_no" required>
                         </div>
                     </div>
                     <div class="row p-3 justify-content-center">
                         <div class="col-12 col-md-6">
                             <label for="email" class="col-form-label">Email</label>
-                            <input name="district[email]" type="email" class="form-control" id="email" required>
+                            <input name="email" type="email" class="form-control" id="email" required>
                         </div>
                     </div>
                     <div class="row p-3" style="display: none;">
                         <div class="col-12 col-sm-6">
                             <label for="role" class="col-form-label">Role</label>
-                            <input name="user[role]" type="text" class="form-control" id="role" value="DISTRICT" readonly>
+                            <input name="role" type="text" class="form-control" id="role" value="DISTRICT" readonly>
                         </div>
                     </div>
                     <div class="row p-3 justify-content-center">
