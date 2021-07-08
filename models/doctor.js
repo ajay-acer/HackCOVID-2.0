@@ -11,5 +11,9 @@ const doctorSchema=new mongoose.Schema({
             ref:'Patient'
         }
     ],
+    noofpatient:{
+        type:Number,
+        default:0
+    }
 })
 module.exports=new mongoose.model('Doctor',doctorSchema)

@@ -74,6 +74,11 @@ const patientSchema=new mongoose.Schema({
     doctorid:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Doctor'
-    }//noti/p
+    },
+    //noti/p
+    districtid:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+    }
 })
 module.exports=new mongoose.model('Patient',patientSchema)
