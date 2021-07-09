@@ -140,9 +140,9 @@ app.get("/emergency",isLoggedIn,isPatient,(req,res)=>{
 })
 
 app.get("/extend/:id",isLoggedIn,isDoctor,(req,res)=>{
-    Patient.findOneAndUpdate({patientid:req.params.id},{$inc:{enddate:7* 24 * 60 * 60 * 1000}},{new:true},(err,extendedPatient)=>{
+    Patient.findOneAndUpdate({patientid:req.params.id},[{$set:{enddate:{$add:["$enddate",7* 24 * 60 * 60 * 1000]}}}],{new:true},(err,extendedPatient)=>{
         if(err) console.log(err)
-        else res.redirect("/home/DOCTOR"+req.user._id)
+        else res.redirect("/home/DOCTOR/"+req.user._id)
     })
 })
 app.get("/discharge/:id",isLoggedIn,isDoctor,(req,res)=>{
@@ -151,7 +151,7 @@ app.get("/discharge/:id",isLoggedIn,isDoctor,(req,res)=>{
         else{
             Doctor.findOneAndUpdate({doctorid:req.user._id},{$pull:{patientid:req.params.id}},{new:true},(err,negativeDoctor)=>{
                 if(err) console.log(err)
-                else res.redirect("/home/DOCTOR"+req.user._id)
+                else res.redirect("/home/DOCTOR/"+req.user._id)
             })
         }
     })
