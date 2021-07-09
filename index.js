@@ -327,5 +327,5 @@ function isUser(req,res,next){
 // })
 
 app.get("/register",(req,res)=>{
-    res.render("districthome")
+    res.render("doctor")
 })
