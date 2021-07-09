@@ -123,6 +123,7 @@ app.post("/home/PATIENT/:id",(req,res)=>{
         else console.log(result)
     })
     res.redirect("/home/PATIENT/"+req.params.id)
+    //send an email notification
 })
 
 app.get("/emergency",isLoggedIn,isPatient,(req,res)=>{
@@ -134,6 +135,25 @@ app.get("/emergency",isLoggedIn,isPatient,(req,res)=>{
     District.findOneAndUpdate({district:req.user.district},{$push:{sos_requests:newRequest}},(err,result)=>{
         if(err) console.log(err)
         else res.redirect("/home/PATIENT/"+req.user._id)
+    })
+    //send an email notifiaction
+})
+
+app.get("/extend/:id",isLoggedIn,isDoctor,(req,res)=>{
+    Patient.findOneAndUpdate({patientid:req.params.id},{$inc:{enddate:7* 24 * 60 * 60 * 1000}},{new:true},(err,extendedPatient)=>{
+        if(err) console.log(err)
+        else res.redirect("/home/DOCTOR"+req.user._id)
+    })
+})
+app.get("/discharge/:id",isLoggedIn,isDoctor,(req,res)=>{
+    Patient.findOneAndUpdate({patientid:req.params.id},{status:'negative'},{new:true},(err,negativePatient)=>{
+        if(err) console.log(err)
+        else{
+            Doctor.findOneAndUpdate({doctorid:req.user._id},{$pull:{patientid:req.params.id}},{new:true},(err,negativeDoctor)=>{
+                if(err) console.log(err)
+                else res.redirect("/home/DOCTOR"+req.user._id)
+            })
+        }
     })
 })
 //////////////////////////// Auth Routes Starts //////////////////////////////
@@ -233,6 +253,7 @@ app.post("/signup/2",(req,res)=>{
         }
     })
     res.redirect("/login")
+    //send an email  notification with doctor details
 })
 
 app.get("/logout",function(req,res){
