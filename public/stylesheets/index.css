@@ -43,7 +43,7 @@ html,body{
 #signupcontainer{
     padding: 15px 2px 2px 2px;
 }
-input.invalid,textarea.invalid {
+input.invalid {
     background-color: #ffdddd;
 }
 #districtcontainer{
@@ -217,4 +217,7 @@ th,td {
 }
 .modal-footer {
     background: #00BFA6; }
-
+td {
+    text-align: center;
+    vertical-align: middle;
+}
