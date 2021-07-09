@@ -687,14 +687,20 @@
             <% if(x>=16) {%>
                 <% cur="evening"; %>
             <% } %>
-            <% if ((patientdata[0].dailydata[patientdata[0].dailydata.length-1].time === cur) && (patientdata[0].dailydata[patientdata[0].dailydata.length-1].day === (j+1) )) { %>
-                <script>
-                    document.getElementById("patientform").style.display="none";
-                </script>
-            <% } else {%>  
+            <% if (patientdata[0].dailydata.length === 0) { %>
                 <script>
                     document.getElementById("patientform").style.display="display";
                 </script>
+            <% } else {%>
+                <% if ((patientdata[0].dailydata[patientdata[0].dailydata.length-1].time === cur) && (patientdata[0].dailydata[patientdata[0].dailydata.length-1].day === (j+1) )) { %>
+                    <script>
+                        document.getElementById("patientform").style.display="none";
+                    </script>
+                <% } else {%>  
+                    <script>
+                        document.getElementById("patientform").style.display="display";
+                    </script>
+                <% } %>
             <% } %>
         </div>
     </div>
@@ -755,12 +761,22 @@
     if(x<12)
     {
         elements[0].checked = true;
+        elements[0].disabled = false; 
+        elements[1].disabled = true;
+        elements[2].disabled = true;
     }
     if(x>=12 && x<16){
         elements[1].checked = true;
+        elements[1].disabled = false; 
+        elements[0].disabled = true;
+        elements[2].disabled = true;
     }
     if(x>=16){
-        elements[2].checked = true; 
+        elements[2].checked = true;
+        elements[2].disabled = false; 
+        elements[0].disabled = true;
+        elements[1].disabled = true;
+        
     }
     //time automatic
 </script>
