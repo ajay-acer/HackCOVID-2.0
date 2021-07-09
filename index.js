@@ -149,7 +149,11 @@ app.post("/login",passport.authenticate("local",{
         if(req.user.role==roles.lab) res.redirect("/home/"+req.user.role+"/"+req.user._id)
 });
 app.get("/signup",(req,res)=>{
-    res.render("register")
+    District.find((err,district)=>{
+        if(err) console.log(err)
+        else   res.render("register",{district:district}) // array
+    })
+  
 })
 app.post("/signup",function(req,res){
     // console.log(req.body)
@@ -192,12 +196,17 @@ app.post("/signup",function(req,res){
 })
 
 app.get("/signup/2",(req,res)=>{
-    res.render("signup")
+    District.find((err,district)=>{
+        if(err) console.log(err)
+        else   res.render("signup",{district:district}) // array
+    })
 })
 app.post("/signup/2",(req,res)=>{
     console.log(req.body.patient)
     console.log(req.user)
     req.body.patient.address.district=req.user.district
+    req.body.patient.startdate=Date.now()
+    req.body.patient.enddate=Date.now()+14* 24 * 60 * 60 * 1000
     Patient.findOneAndUpdate({patientid:req.user._id},req.body.patient,{new:true},(err,upPatient)=>{
         if(err) console.log(err)
         else{
