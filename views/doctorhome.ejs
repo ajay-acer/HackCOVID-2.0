@@ -1,5 +1,19 @@
 <%- include("partials/header") %>
 <div class="container text-center p-1">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #00BFA6;">
+        <div class="container-fluid">
+            <button class="navbar-toggler mx-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="nav navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="dropdown-item p-1" href="#staticBackdrop" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><b><i class="fa fa-sign-out" aria-hidden="true"></i>Log out</b></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <div class="row justify-content-center align-items-center p-2">
         <h3 class="p-2">Dr. <%= user.name%></h3>
         <div class="col-12">
@@ -11,7 +25,7 @@
                 </tr>
                 <% for(var i=0;i< doctor.patientid.length;i++) { %>
                     <tr>
-                        <td><a href="" class="link-primary"><%= doctor.patientid[i] %></a></td>
+                        <td><a href="/home/PATIENT/<%= doctor.patientid[i] %>" class="link-primary"><%= doctor.patientid[i] %></a></td>
                         <td>
                             <button type="button" class="btn btn-success rounded-pill p-2" data-bs-toggle="modal" data-bs-target="#discharge" data-bs-whatever="<%= doctor.patientid[i] %>">
                                 <i class="fas fa-hand-holding-medical"></i> Discharge</button>
@@ -27,6 +41,7 @@
         <div class="p-2 text-center">
             <a href="#logout" data-bs-toggle="modal" data-bs-target="#logout" class="btn btn-warning rounded-pill p-2"><i class="fa fa-sign-out" aria-hidden="true"></i> Log out</a>
         </div>
+        <marquee><b>Click patient id to view patient dailydata</b></marquee>
     </div>
 </div>
 <!-- Modal -->

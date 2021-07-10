@@ -3,7 +3,15 @@
     <!-- Sidebar  -->
     <nav id="sidebar">
         <div class="sidebar-header">
-            <img class="img-fluid rounded-pill" src="https://thumbs.dreamstime.com/z/stay-home-quarantine-your-flying-viruses-coronavirus-pandemic-social-distance-self-isolation-to-stop-outbreak-176660220.jpg" alt="" height="70" width="81">
+            <div class="dropdown p-2 text-center">
+                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                    <b><i class="fas fa-user"></i> <%= user.name%></b>
+                </a>
+                <ul class="dropdown-menu text-center" aria-labelledby="dropdownMenuLink">
+                    <li><a class="dropdown-item p-1" href="#profile" data-bs-toggle="modal" data-bs-target="#profile"><i class="fas fa-user"></i> Profile</a></li>
+                    <li><a class="dropdown-item p-1" href="#staticBackdrop" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa fa-sign-out" aria-hidden="true"></i>Sign out</a></li>
+                </ul>
+            </div>
         </div>
         <ul class="list-unstyled components text-center">
             <div id="myDiv">
@@ -33,9 +41,11 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/home/PATIENT/<%= user._id%>"><b><i class="fa fa-home" aria-hidden="true"></i> Home</b></a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-danger" href="/emergency"><b><i class="fa fa-ambulance" aria-hidden="true"></i> Emergency</b></a>
-                        </li>
+                        <% if(user.role==='PATIENT') { %>
+                            <li class="nav-item">
+                                <a class="nav-link text-danger" href="/emergency"><b><i class="fa fa-ambulance" aria-hidden="true"></i> Emergency</b></a>
+                            </li>
+                        <% } %>
                         <li class="nav-item">
                             <a class="nav-link" href="#staticBackdrop" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><b><i class="fa fa-sign-out" aria-hidden="true"></i>Log out</b></a>
                         </li>
@@ -44,9 +54,12 @@
             </div>
         </nav>   
         <% for(var j=0;j< diff_days;j++) { %>
+        <% var c=0 %>
+        <% var x="" %>
         <div id="homeSubmenu<%= j %>" class="tabcontent" style="display: none;">
             <% for(var k=0;k< patientdata[0].dailydata.length;k++) { %>
                 <% if (patientdata[0].dailydata[k].day == (j+1)) { %>
+                    <% c=c+1 %>
                     <form action="">
                         <fieldset disabled>
                             <div class="row p-2 justify-content-center">
@@ -54,18 +67,21 @@
                                     <input id="morning" value="morning" type="radio"
                                         <% if (patientdata[0].dailydata[k].time === "morning") {%>
                                         <%= "checked" %>
+                                        <% x="morning" %>
                                         <% } %>
                                     >
                                     <label for="morning" onclick="">Morning</label>
                                     <input id="afternoon" value="afternoon" type="radio"
                                         <% if (patientdata[0].dailydata[k].time === "afternoon") {%>
                                         <%= "checked" %>
+                                        <% x="afternoon" %>
                                         <% } %>
                                     >
                                     <label for="afternoon" onclick="">Afternoon</label>
                                     <input id="evening" value="evening" type="radio"
                                         <% if (patientdata[0].dailydata[k].time === "evening") {%>
                                         <%= "checked" %>
+                                        <% x="evening" %>
                                         <% } %>
                                     >
                                     <label for="evening" onclick="">Evening</label>
@@ -290,43 +306,74 @@
                                     <input name="patient[dailydata][day]" type="number" class="form-control" id="day" value=<%= patientdata[0].dailydata[k].day %>>
                                 </div>
                             </div>
-                            <div class="row">
-                                <h3>Doctor's Review</h3>
-                                <div class="form-group">
-                                    <textarea rows="5" class="form-control" id="review" name="patient[dailydata][review]" readonly><%=patientdata[0].dailydata[k].review %></textarea>
-                                </div>
-                            </div>
                         </fieldset>
                     </form>
+                    <% if(user.role==='DOCTOR') { %>
+                        <h3>Doctor's Review</h3>
+                        <form action="/review/<%= patientdata[0].patientid %>/<%= j+1 %>/<%= x%>">
+                            <fieldset
+                                <% if (typeof patientdata[0].dailydata[k].review == 'undefined') {%>
+                                    <%= "" %>
+                                <% } else {%>
+                                    <%= "disabled" %>
+                                <% } %>
+                            >
+                                <div class="form-group">
+                                    <textarea rows="5" class="form-control" id="address" name="address"><%= patientdata[0].dailydata[k].review %></textarea>
+                                </div>
+                                <div class="p-2 text-center">
+                                    <button type="submit" class="shadow btn btn-dark btn-lg rounded-pill">Submit</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    <% } else {%>
+                        <div class="row">
+                            <h3>Doctor's Review</h3>
+                            <div class="form-group">
+                                <textarea rows="5" class="form-control" id="review" name="patient[dailydata][review]" readonly><%= patientdata[0].dailydata[k].review %></textarea>
+                            </div>
+                        </div>
+                    <% } %>
                 <% } %>
+            <% } %>
+            <% if (c==0) {%>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Data not entered!</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
             <% } %>
         </div>
         <% } %>
+        <% c=0; %>
         <div id="homeSubmenu<%= j %>" class="tabcontent" style="display: block;">
             <% for(var k=0;k< patientdata[0].dailydata.length;k++) { %>
-                <% if (patientdata[0].dailydata[k].day === (j+1) ) { %>
+                <% if (patientdata[0].dailydata[k].day === (j+1)) { %>
+                    <% c=c+1; %>
                         <form action="">
                             <fieldset disabled>
                                 <div class="row p-2 justify-content-center">
                                     <div class="col-12 col-sm-9 col-md-6 switch-toggle switch-candy">
                                         <input id="morning" value="morning" type="radio"
-                                            <% if (patientdata[0].dailydata[k].time === "morning") {%>
-                                            <%= "checked" %>
-                                            <% } %>
-                                        >
-                                        <label for="morning" onclick="">Morning</label>
-                                        <input id="afternoon" value="afternoon" type="radio"
-                                            <% if (patientdata[0].dailydata[k].time === "afternoon") {%>
-                                            <%= "checked" %>
-                                            <% } %>
-                                        >
-                                        <label for="afternoon" onclick="">Afternoon</label>
-                                        <input id="evening" value="evening" type="radio"
-                                            <% if (patientdata[0].dailydata[k].time === "evening") {%>
-                                            <%= "checked" %>
-                                            <% } %>
-                                        >
-                                        <label for="evening" onclick="">Evening</label>
+                                        <% if (patientdata[0].dailydata[k].time === "morning") {%>
+                                        <%= "checked" %>
+                                        <% x="morning" %>
+                                        <% } %>
+                                    >
+                                    <label for="morning" onclick="">Morning</label>
+                                    <input id="afternoon" value="afternoon" type="radio"
+                                        <% if (patientdata[0].dailydata[k].time === "afternoon") {%>
+                                        <%= "checked" %>
+                                        <% x="afternoon" %>
+                                        <% } %>
+                                    >
+                                    <label for="afternoon" onclick="">Afternoon</label>
+                                    <input id="evening" value="evening" type="radio"
+                                        <% if (patientdata[0].dailydata[k].time === "evening") {%>
+                                        <%= "checked" %>
+                                        <% x="evening" %>
+                                        <% } %>
+                                    >
+                                    <label for="evening" onclick="">Evening</label>
                                         <a></a>
                                     </div>
                                 </div>
@@ -548,16 +595,37 @@
                                         <input name="patient[dailydata][day]" type="number" class="form-control" id="day" value=<%= patientdata[0].dailydata[k].day %>>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <h3>Doctor's Review</h3>
-                                    <div class="form-group">
-                                        <textarea rows="5" class="form-control" id="review" name="patient[dailydata][review]" readonly><%= patientdata[0].dailydata[k].review %></textarea>
-                                    </div>
-                                </div>
                             </fieldset>
                         </form>
+                        <% if(user.role==='DOCTOR') { %>
+                            <h3>Doctor's Review</h3>
+                            <form action="/review/<%= patientdata[0].patientid %>/<%= j+1 %>/<%= x%>">
+                                <fieldset
+                                    <% if (typeof patientdata[0].dailydata[k].review == 'undefined') {%>
+                                        <%= "" %>
+                                    <% } else {%>
+                                        <%= "disabled" %>
+                                    <% } %>   
+                                >
+                                    <div class="form-group">
+                                        <textarea rows="5" class="form-control" id="address" name="address"></textarea>
+                                    </div>
+                                    <div class="p-2 text-center">
+                                        <button type="submit" class="shadow btn btn-dark btn-lg rounded-pill">Submit</button>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        <% } else {%>
+                            <div class="row">
+                                <h3>Doctor's Review</h3>
+                                <div class="form-group">
+                                    <textarea rows="5" class="form-control" id="review" name="patient[dailydata][review]" readonly><%= patientdata[0].dailydata[k].review %></textarea>
+                                </div>
+                            </div>
+                        <% } %>
                     <% } %>  
                 <% } %>
+            <% if(user.role === 'PATIENT') { %>
             <div id="patientform">
                 <form action="/home/PATIENT/<%=user._id%>" method="POST">
                     <div class="row p-2 justify-content-center">
@@ -663,18 +731,14 @@
                         </div>
                     </div>
                 </form>
-                <% if(user.role==='DOCTOR') { %>
-                    <h3>Doctor's Review</h3>
-                    <form action="">
-                        <div class="form-group">
-                            <textarea rows="5" class="form-control" id="address" name="address"></textarea>
-                        </div>
-                        <div class="p-2 text-center">
-                            <button type="submit" class="shadow btn btn-dark btn-lg rounded-pill">Submit</button>
-                        </div>
-                    </form>
-                <% } %>
             </div>
+            <% } else if(c==0){ %>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Data yet to be entered!</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <% } %>
+
             <% var time=new Date(); %>
             <% var x=time.getHours(); %>
             <% var cur=""; %>
@@ -721,7 +785,25 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
+    <div class="modal fade" id="profile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="profile" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel"><i class="fa fa-user" aria-hidden="true"></i> <%= user.name%></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <% if(user.role === 'PATIENT') { %>
+                    <div class="modal-body"></div>
+                <% } else { %>
+                    <div class="modal-body"></div>
+                <% } %>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script type="text/javascript">
     $(document).ready(function () {
