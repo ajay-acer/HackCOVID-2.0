@@ -1,5 +1,19 @@
 <%- include("partials/header") %>
-<div class="container-fluid text-center p-2" id="hospcontainer">
+<div class="container text-center p-1">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #00BFA6;">
+        <div class="container-fluid">
+            <button class="navbar-toggler mx-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="nav navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="dropdown-item p-1" href="#staticBackdrop" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><b><i class="fa fa-sign-out" aria-hidden="true"></i>Log out</b></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <div class="row justify-content-center align-items-center p-2">
         <h3 class="p-2">Dr. <%= user.name%></h3>
         <div class="col-12">
@@ -11,16 +25,16 @@
                 </tr>
                 <% for(var i=0;i< doctor.patientid.length;i++) { %>
                     <tr>
-                        <td><a href="/home/PATIENT/<%= doctor.patientid[i]%>" class="link-primary"><%= doctor.patientid[i] %></a></td>
+
+                        <td><a href="/home/PATIENT/<%= doctor.patientid[i] %>" class="link-primary"><%= doctor.patientid[i] %></a></td>
+
                         <td>
-                            <!-- <button type="button" class="btn btn-success rounded-pill p-2" data-bs-toggle="modal" data-bs-target="#discharge">
-                                <i class="fas fa-hand-holding-medical"></i> Discharge</button> -->
-                            <a href="/discharge/<%= doctor.patientid[i]%>">Discharge</a>
+                            <button type="button" class="btn btn-success rounded-pill p-2" data-bs-toggle="modal" data-bs-target="#discharge" data-bs-whatever="<%= doctor.patientid[i] %>">
+                                <i class="fas fa-hand-holding-medical"></i> Discharge</button>
                         </td>
                         <td>
-                            <!-- <button type="button" class="btn btn-primary rounded-pill p-2" data-bs-toggle="modal" data-bs-target="#extend">
-                                <i class="fa fa-heartbeat" aria-hidden="true"></i> Extend</button>    -->
-                            <a href="/extend/<%= doctor.patientid[i]%>">Extend</a>
+                            <button type="button" class="btn btn-primary rounded-pill p-2" data-bs-toggle="modal" data-bs-target="#extend" data-bs-whatever="<%= doctor.patientid[i] %>">
+                                <i class="fa fa-heartbeat" aria-hidden="true"></i> Extend</button>   
                         </td>
                     </tr>
                 <% } %>
@@ -29,6 +43,7 @@
         <div class="p-2 text-center">
             <a href="#logout" data-bs-toggle="modal" data-bs-target="#logout" class="btn btn-warning rounded-pill p-2"><i class="fa fa-sign-out" aria-hidden="true"></i> Log out</a>
         </div>
+        <marquee><b>Click patient id to view patient dailydata</b></marquee>
     </div>
 </div>
 <!-- Modal -->
@@ -39,9 +54,7 @@
                 <h5 class="modal-title" id="staticBackdropLabel">Discharge <i class="fas fa-hand-holding-medical"></i></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                Do you want to discharge this patient?
-            </div>
+            <div class="modal-body"><b></b></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
                 <a href="" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i> Yes </a>
@@ -56,12 +69,10 @@
                 <h5 class="modal-title" id="staticBackdropLabel">Extend <i class="fa fa-heartbeat" aria-hidden="true"></i></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                Do you want to extend quarantine period of this patient?
-            </div>
+            <div class="modal-body"><b></b></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
-                <a href=""  class="btn btn-primary"> Yes</a>
+                <a href=""  class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i> Yes</a>
             </div>
         </div>
     </div>
@@ -83,4 +94,26 @@
         </div>
     </div>
 </div>
+<script>
+    var discharge = document.getElementById('discharge');
+    discharge.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var patient = button.getAttribute('data-bs-whatever');
+        var modalBodyb = discharge.querySelector('.modal-body b');
+        var modalfootera = discharge.querySelector('.modal-footer a');
+        modalfootera.href="/discharge/"+patient;
+        modalBodyb.textContent= "Do you want to discharge patient "+patient+" ?";
+    })
+</script>
+<script>
+    var extend = document.getElementById('extend');
+    extend.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var patient = button.getAttribute('data-bs-whatever');
+        var modalBodyb = extend.querySelector('.modal-body b');
+        var modalfootera = extend.querySelector('.modal-footer a');
+        modalfootera.href="/extend/"+patient;
+        modalBodyb.textContent= "Do you want to extend quarantine period of patient "+patient+" ?";
+    })
+</script>
 <%- include("partials/footer") %>

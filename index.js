@@ -73,7 +73,9 @@ app.get("/",(req,res)=>{
 })
 app.get("/home/:role/:id",isLoggedIn,(req,res)=>{
     if(req.params.role==roles.patient){
+
         if((req.user.role==roles.patient && req.params.id==req.user._id )|| req.user.role==roles.doctor){
+
             Patient.find({patientid:req.params.id},(err,patientdetails)=>{
                 if(err) console.log(err)
                 else{

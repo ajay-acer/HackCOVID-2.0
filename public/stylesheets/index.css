@@ -221,3 +221,11 @@ td {
     text-align: center;
     vertical-align: middle;
 }
+.sidebar-footer{
+    height: 50px;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    list-style-type: none;
+    padding-bottom:5.5em;
+}

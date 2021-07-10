@@ -3,7 +3,15 @@
     <!-- Sidebar  -->
     <nav id="sidebar">
         <div class="sidebar-header">
-            <h3><%= district.district%></h3>
+            <div class="dropdown p-2 text-center">
+                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                    <b><i class="fas fa-user"></i> <%= district.district%></b>
+                </a>
+                <ul class="dropdown-menu text-center" aria-labelledby="dropdownMenuLink">
+                    <li><a class="dropdown-item p-1" href="#profile" data-bs-toggle="modal" data-bs-target="#profile"><i class="fas fa-user"></i> Profile</a></li>
+                    <li><a class="dropdown-item p-1" href="#staticBackdrop" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa fa-sign-out" aria-hidden="true"></i>Sign out</a></li>
+                </ul>
+            </div>
         </div>
         <ul class="list-unstyled components text-center">
             <div id="myDiv">
@@ -17,7 +25,7 @@
                     <a href="#" class="btna" onclick="openForm('doctorcontent')"><b><i class="fas fa-user-md"></i> Doctors</b></a>
                 </li>
                 <li>
-                    <a href="#" class=" btna" onclick="openForm('labcontent')"><b><i class="fa fa-flask" aria-hidden="true"></i> Lab</b></a>
+                    <a href="#" class="btna" onclick="openForm('labcontent')"><b><i class="fa fa-flask" aria-hidden="true"></i> Lab</b></a>
                 </li>
             </div>
         </ul>
@@ -35,7 +43,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="nav navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/logout"><b><i class="fa fa-sign-out" aria-hidden="true"></i> Log out</b></a>
+                            <a class="dropdown-item p-1" href="#staticBackdrop" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><b><i class="fa fa-sign-out" aria-hidden="true"></i>Log out</b></a>
                         </li>
                     </ul>
                 </div>
@@ -50,7 +58,7 @@
                 <tr>
                     <td>name</td>
                     <td>
-                        <button type="button" class="btn btn-success rounded-pill p-2" data-bs-toggle="modal" data-bs-target="#removelab">
+                        <button type="button" class="btn btn-danger rounded-pill p-2" data-bs-toggle="modal" data-bs-target="#removelab">
                             <i class="fas fa-user-times"></i> Remove</button>
                     </td>
                 </tr>
@@ -88,14 +96,14 @@
                         <td><%= sos_requests.status %></td>
                         <td>
                             <% if (sos_requests.status === "Requested") {%>
-                                <a href="" class="btn btn-primary rounded-pill p-2" style="display: none;"><i class="fas fa-heartbeat"></i> Resolved</a>
-                                <a href="" class="btn btn-info rounded-pill p-2" style="display: inline;"><i class="fas fa-hand-holding-medical"></i> In tounch</a>
+                                <a href="" class="btn btn-primary rounded-pill" style="display: none;"><i class="fas fa-heartbeat"></i> Resolved</a>
+                                <a href="" class="btn btn-info rounded-pill" style="display: inline;"><i class="fas fa-hand-holding-medical"></i> In tounch</a>
                             <% } else if (sos_requests.status === "In tounch"){ %>
-                                    <a href="" class="btn btn-primary rounded-pill p-2" style="display: inline;"><i class="fas fa-heartbeat"></i> Resolved</a>
-                                    <a href="" class="btn btn-info rounded-pill p-2" style="display: none;"><i class="fas fa-hand-holding-medical"></i> In tounch</a>
+                                    <a href="" class="btn btn-primary rounded-pill" style="display: inline;"><i class="fas fa-heartbeat"></i> Resolved</a>
+                                    <a href="" class="btn btn-info rounded-pill" style="display: none;"><i class="fas fa-hand-holding-medical"></i> In tounch</a>
                             <% } else { %>
-                                <a href="" class="btn btn-primary rounded-pill p-2" style="display: none;"><i class="fas fa-heartbeat"></i> Resolved</a>
-                                <a href="" class="btn btn-info rounded-pill p-2" style="display: none;"><i class="fas fa-hand-holding-medical"></i> In tounch</a>
+                                <a href="" class="btn btn-primary rounded-pill" style="display: none;"><i class="fas fa-heartbeat"></i> Resolved</a>
+                                <a href="" class="btn btn-info rounded-pill" style="display: none;"><i class="fas fa-hand-holding-medical"></i> In tounch</a>
                             <% } %>
                         </td>
                     </tr>
@@ -112,7 +120,7 @@
                     <tr>
                         <td><a href="" class="link-primary"><%= district.doctorid[i] %></a></td>
                         <td>
-                            <button type="button" class="btn btn-success rounded-pill p-2" data-bs-toggle="modal" data-bs-target="#removedoc">
+                            <button type="button" class="btn btn-danger rounded-pill p-2" data-bs-toggle="modal" data-bs-target="#removedoc" data-bs-whatever="<%= district.doctorid[i] %>">
                                 <i class="fas fa-user-slash"></i> Remove</button>
                         </td>
                     </tr>
@@ -129,7 +137,7 @@
             <div class="modal-content">
                 <div class="modal-header">
 
-                    <h5 class="modal-title" id="staticBackdropLabel">Add new Doctor<i class="fa fa-plus" aria-hidden="true"></i></h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">Add new Doctor <i class="fa fa-plus" aria-hidden="true"></i></h5>
 
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -238,12 +246,10 @@
                     <h5 class="modal-title" id="staticBackdropLabel">Remove Doctor <i class="fas fa-user-slash"></i></i></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    Do you want to remove this doctor.
-                </div>
+                <div class="modal-body"><b></b></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
-                    <a href=""  class="btn btn-primary"> Yes </a>
+                    <a href=""  class="btn btn-danger"><i class="fa fa-check" aria-hidden="true"></i> Yes </a>
                 </div>
             </div>
         </div>
@@ -260,11 +266,42 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
-                    <a href=""  class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i> Yes </a>
+                    <a href=""  class="btn btn-danger"><i class="fa fa-check" aria-hidden="true"></i> Yes </a>
                 </div>
             </div>
         </div>
     </div>
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Log out <i class="fa fa-lock" aria-hidden="true"></i></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <b>Do you want to Log out?</b>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
+                    <a href="/logout" class="btn btn-warning"><i class="fa fa-sign-out" aria-hidden="true"></i> Log out</a>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="modal fade" id="profile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="profile" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel"><i class="fa fa-user" aria-hidden="true"></i> <%= district.district %></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 </div>
 
 
@@ -306,5 +343,16 @@
     $('#adddoctor').on('hidden.bs.modal', function () {
     $(this).find('form').trigger('reset');
 })
+</script>
+<script>
+    var removedoc = document.getElementById('removedoc');
+    removedoc.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var doctor = button.getAttribute('data-bs-whatever');
+        var modalBodyb = removedoc.querySelector('.modal-body b');
+        var modalfootera = removedoc.querySelector('.modal-footer a');
+        modalfootera.href="/remove/"+doctor;
+        modalBodyb.textContent= "Do you want to remove doctor "+doctor+" ?";
+    })
 </script>
 <%- include("partials/footer") %>
