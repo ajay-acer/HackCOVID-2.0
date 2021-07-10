@@ -159,9 +159,14 @@ app.get("/discharge/:id",isLoggedIn,isDoctor,(req,res)=>{
     })
 })
 app.post("/review/:id/:day/:time",isLoggedIn,isDoctor,(req,res)=>{
-    Pateint.findOneAndUpdate({patientid:req.params.id,'dailydata.day':req.params.day,'dailydata.time':req.params.time},{'dailydata.review':req.body},{new:true},(err,reviewdPatient)=>{
+    console.log(req.body.address)
+    //res.redirect("/home/PATIENT/"+req.params.id)
+    Patient.findOneAndUpdate({patientid:req.params.id,dailydata:{$elemMatch:{day:req.params.day,time:req.params.time}}},{$set:{'dailydata.$.review':req.body.address}},{new:true},(err,reviewdPatient)=>{
         if(err) console.log(err)
-        else console.log(reviewdPatient)
+        else {
+            console.log('review addded',reviewdPatient)
+            res.redirect("/home/PATIENT/"+req.params.id)
+        }
     })
 })
 
