@@ -156,8 +156,11 @@ app.get("/discharge/:id",isLoggedIn,isDoctor,(req,res)=>{
         }
     })
 })
-app.post("/review/:id",isLoggedIn,isDoctor,(req,res)=>{
-    
+app.post("/review/:id/:day/:time",isLoggedIn,isDoctor,(req,res)=>{
+    Pateint.findOneAndUpdate({patientid:req.params.id,'dailydata.day':req.params.day,'dailydata.time':req.params.time},{'dailydata.review':req.body},{new:true},(err,reviewdPatient)=>{
+        if(err) console.log(err)
+        else console.log(reviewdPatient)
+    })
 })
 
 
