@@ -1,5 +1,5 @@
 <%- include("partials/header") %>
-<div class="container-fluid text-center p-2" id="hospcontainer">
+<div class="container text-center p-1">
     <div class="row justify-content-center align-items-center p-2">
         <h3 class="p-2">Dr. <%= user.name%></h3>
         <div class="col-12">
@@ -13,11 +13,11 @@
                     <tr>
                         <td><a href="" class="link-primary"><%= doctor.patientid[i] %></a></td>
                         <td>
-                            <button type="button" class="btn btn-success rounded-pill p-2" data-bs-toggle="modal" data-bs-target="#discharge">
+                            <button type="button" class="btn btn-success rounded-pill p-2" data-bs-toggle="modal" data-bs-target="#discharge" data-bs-whatever="<%= doctor.patientid[i] %>">
                                 <i class="fas fa-hand-holding-medical"></i> Discharge</button>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-primary rounded-pill p-2" data-bs-toggle="modal" data-bs-target="#extend">
+                            <button type="button" class="btn btn-primary rounded-pill p-2" data-bs-toggle="modal" data-bs-target="#extend" data-bs-whatever="<%= doctor.patientid[i] %>">
                                 <i class="fa fa-heartbeat" aria-hidden="true"></i> Extend</button>   
                         </td>
                     </tr>
@@ -37,9 +37,7 @@
                 <h5 class="modal-title" id="staticBackdropLabel">Discharge <i class="fas fa-hand-holding-medical"></i></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                Do you want to discharge this patient?
-            </div>
+            <div class="modal-body"><b></b></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
                 <a href="" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i> Yes </a>
@@ -54,12 +52,10 @@
                 <h5 class="modal-title" id="staticBackdropLabel">Extend <i class="fa fa-heartbeat" aria-hidden="true"></i></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                Do you want to extend quarantine period of this patient?
-            </div>
+            <div class="modal-body"><b></b></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
-                <a href=""  class="btn btn-primary"> Yes</a>
+                <a href=""  class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i> Yes</a>
             </div>
         </div>
     </div>
@@ -81,4 +77,26 @@
         </div>
     </div>
 </div>
+<script>
+    var discharge = document.getElementById('discharge');
+    discharge.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var patient = button.getAttribute('data-bs-whatever');
+        var modalBodyb = discharge.querySelector('.modal-body b');
+        var modalfootera = discharge.querySelector('.modal-footer a');
+        modalfootera.href="/discharge/"+patient;
+        modalBodyb.textContent= "Do you want to discharge patient "+patient+" ?";
+    })
+</script>
+<script>
+    var extend = document.getElementById('extend');
+    extend.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var patient = button.getAttribute('data-bs-whatever');
+        var modalBodyb = extend.querySelector('.modal-body b');
+        var modalfootera = extend.querySelector('.modal-footer a');
+        modalfootera.href="/extend/"+patient;
+        modalBodyb.textContent= "Do you want to extend quarantine period of patient "+patient+" ?";
+    })
+</script>
 <%- include("partials/footer") %>
