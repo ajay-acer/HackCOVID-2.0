@@ -731,6 +731,18 @@
                         </div>
                     </div>
                 </form>
+
+                <% if(user.role==='DOCTOR') { %>
+                    <h3>Doctor's Review</h3>
+                    <form action="/review/<%= patientdata[0].patientid %>" method="POST">
+                        <div class="form-group">
+                            <textarea rows="5" class="form-control" id="address" name="address"></textarea>
+                        </div>
+                        <div class="p-2 text-center">
+                            <button type="submit" class="shadow btn btn-dark btn-lg rounded-pill">Submit</button>
+                        </div>
+                    </form>
+                <% } %>
             </div>
             <% } else if(c==0){ %>
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">

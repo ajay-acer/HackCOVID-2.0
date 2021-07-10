@@ -73,7 +73,9 @@ app.get("/",(req,res)=>{
 })
 app.get("/home/:role/:id",isLoggedIn,(req,res)=>{
     if(req.params.role==roles.patient){
-        if((req.user.role==roles.patient && req.params.id==req.user._id) || req.user.role==roles.doctor){
+
+        if((req.user.role==roles.patient && req.params.id==req.user._id )|| req.user.role==roles.doctor){
+
             Patient.find({patientid:req.params.id},(err,patientdetails)=>{
                 if(err) console.log(err)
                 else{
@@ -149,13 +151,21 @@ app.get("/discharge/:id",isLoggedIn,isDoctor,(req,res)=>{
     Patient.findOneAndUpdate({patientid:req.params.id},{status:'negative'},{new:true},(err,negativePatient)=>{
         if(err) console.log(err)
         else{
-            Doctor.findOneAndUpdate({doctorid:req.user._id},{$pull:{patientid:req.params.id}},{new:true},(err,negativeDoctor)=>{
+            Doctor.findOneAndUpdate({doctorid:req.user._id},{$pull:{patientid:req.params.id},$inc:{noofpatient:-1}},{new:true},(err,negativeDoctor)=>{
                 if(err) console.log(err)
                 else res.redirect("/home/DOCTOR/"+req.user._id)
             })
         }
     })
 })
+app.post("/review/:id/:day/:time",isLoggedIn,isDoctor,(req,res)=>{
+    Pateint.findOneAndUpdate({patientid:req.params.id,'dailydata.day':req.params.day,'dailydata.time':req.params.time},{'dailydata.review':req.body},{new:true},(err,reviewdPatient)=>{
+        if(err) console.log(err)
+        else console.log(reviewdPatient)
+    })
+})
+
+
 //////////////////////////// Auth Routes Starts //////////////////////////////
 app.get("/login",(req,res)=>{
     res.render("login")
