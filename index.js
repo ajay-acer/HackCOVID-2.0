@@ -80,7 +80,13 @@ app.get("/home/:role/:id",isLoggedIn,(req,res)=>{
                 if(err) console.log(err)
                 else{
                     console.log(patientdetails)
-                    res.render("demo",{user:req.user,patientdata:patientdetails})
+                    User.findById({_id:patientdetails[0].doctorid},(err,doctor)=>{
+                        if(err) console.log(err)
+                        else{
+                             console.log('Doctor',doctor)
+                             res.render("demo",{user:req.user,patientdata:patientdetails,doctor:doctor})
+                        }
+                    })
                 } 
             })
             
@@ -92,7 +98,15 @@ app.get("/home/:role/:id",isLoggedIn,(req,res)=>{
         if(req.user.role==roles.doctor && req.params.id==req.user._id){
             Doctor.find({doctorid:req.user._id},(err,doctor)=>{
                 if(err) console.log(err)
-                else res.render("doctorhome",{user:req.user,doctor:doctor[0]})
+                else{
+                    User.find({_id:{$in:doctor[0].patientid}},(err,patients)=>{
+                        if(err) console.log(err)
+                        else {
+                            console.log('PAtients',patients)
+                            res.render("doctorhome",{user:req.user,doctor:doctor[0],patients:patients})
+                        }
+                    })
+                }
             })
             
         } 
@@ -105,7 +119,14 @@ app.get("/home/:role/:id",isLoggedIn,(req,res)=>{
                 if(err) console.log(err)
                 else {
                     //console.log(district[0])
-                    res.render("districthome",{district:district[0]})
+                    User.find({district:district[0].district},(err,users)=>{
+                        if(err) console.log(err)
+                        else {
+                            console.log('Users',users)
+                            res.render("districthome",{district:district[0],users:users})
+                        }
+                    })
+                   
                 }
             })
             
