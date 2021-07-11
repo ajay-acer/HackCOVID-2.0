@@ -73,12 +73,20 @@ app.get("/",(req,res)=>{
 })
 app.get("/home/:role/:id",isLoggedIn,(req,res)=>{
     if(req.params.role==roles.patient){
-        if((req.user.role==roles.patient && req.params.id==req.user._id) || req.user.role==roles.doctor){
+
+        if((req.user.role==roles.patient && req.params.id==req.user._id )|| req.user.role==roles.doctor){
+
             Patient.find({patientid:req.params.id},(err,patientdetails)=>{
                 if(err) console.log(err)
                 else{
                     console.log(patientdetails)
-                    res.render("demo",{user:req.user,patientdata:patientdetails})
+                    User.findById({_id:patientdetails[0].doctorid},(err,doctor)=>{
+                        if(err) console.log(err)
+                        else{
+                             console.log('Doctor',doctor)
+                             res.render("demo",{user:req.user,patientdata:patientdetails,doctor:doctor})
+                        }
+                    })
                 } 
             })
             
@@ -90,7 +98,15 @@ app.get("/home/:role/:id",isLoggedIn,(req,res)=>{
         if(req.user.role==roles.doctor && req.params.id==req.user._id){
             Doctor.find({doctorid:req.user._id},(err,doctor)=>{
                 if(err) console.log(err)
-                else res.render("doctorhome",{user:req.user,doctor:doctor[0]})
+                else{
+                    User.find({_id:{$in:doctor[0].patientid}},(err,patients)=>{
+                        if(err) console.log(err)
+                        else {
+                            console.log('PAtients',patients)
+                            res.render("doctorhome",{user:req.user,doctor:doctor[0],patients:patients})
+                        }
+                    })
+                }
             })
             
         } 
@@ -103,7 +119,14 @@ app.get("/home/:role/:id",isLoggedIn,(req,res)=>{
                 if(err) console.log(err)
                 else {
                     //console.log(district[0])
-                    res.render("districthome",{district:district[0]})
+                    User.find({district:district[0].district},(err,users)=>{
+                        if(err) console.log(err)
+                        else {
+                            console.log('Users',users)
+                            res.render("districthome",{district:district[0],users:users})
+                        }
+                    })
+                   
                 }
             })
             
@@ -149,13 +172,26 @@ app.get("/discharge/:id",isLoggedIn,isDoctor,(req,res)=>{
     Patient.findOneAndUpdate({patientid:req.params.id},{status:'negative'},{new:true},(err,negativePatient)=>{
         if(err) console.log(err)
         else{
-            Doctor.findOneAndUpdate({doctorid:req.user._id},{$pull:{patientid:req.params.id}},{new:true},(err,negativeDoctor)=>{
+            Doctor.findOneAndUpdate({doctorid:req.user._id},{$pull:{patientid:req.params.id},$inc:{noofpatient:-1}},{new:true},(err,negativeDoctor)=>{
                 if(err) console.log(err)
                 else res.redirect("/home/DOCTOR/"+req.user._id)
             })
         }
     })
 })
+app.post("/review/:id/:day/:time",isLoggedIn,isDoctor,(req,res)=>{
+    console.log(req.body.address)
+    //res.redirect("/home/PATIENT/"+req.params.id)
+    Patient.findOneAndUpdate({patientid:req.params.id,dailydata:{$elemMatch:{day:req.params.day,time:req.params.time}}},{$set:{'dailydata.$.review':req.body.address}},{new:true},(err,reviewdPatient)=>{
+        if(err) console.log(err)
+        else {
+            console.log('review addded',reviewdPatient)
+            res.redirect("/home/PATIENT/"+req.params.id)
+        }
+    })
+})
+
+
 //////////////////////////// Auth Routes Starts //////////////////////////////
 app.get("/login",(req,res)=>{
     res.render("login")

@@ -321,7 +321,7 @@
                     </form>
                     <% if(user.role==='DOCTOR') { %>
                         <h3>Doctor's Review</h3>
-                        <form action="/review/<%= patientdata[0].patientid %>/<%= j+1 %>/<%= x%>">
+                        <form action="/review/<%= patientdata[0].patientid %>/<%= j+1 %>/<%= x%>" method="post">
                             <fieldset
                                 <% if (typeof patientdata[0].dailydata[k].review == 'undefined') {%>
                                     <%= "" %>
@@ -610,7 +610,7 @@
                         </form>
                         <% if(user.role==='DOCTOR') { %>
                             <h3>Doctor's Review</h3>
-                            <form action="/review/<%= patientdata[0].patientid %>/<%= j+1 %>/<%= x%>">
+                            <form action="/review/<%= patientdata[0].patientid %>/<%= j+1 %>/<%= x%>" method="post">
                                 <fieldset
                                     <% if (typeof patientdata[0].dailydata[k].review == 'undefined') {%>
                                         <%= "" %>
