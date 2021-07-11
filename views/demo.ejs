@@ -7,10 +7,21 @@
                 <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                     <b><i class="fas fa-user"></i> <%= user.name%></b>
                 </a>
-                <ul class="dropdown-menu text-center" aria-labelledby="dropdownMenuLink">
-                    <li><a class="dropdown-item p-1" href="#profile" data-bs-toggle="modal" data-bs-target="#profile"><i class="fas fa-user"></i> Profile</a></li>
-                    <li><a class="dropdown-item p-1" href="#staticBackdrop" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa fa-sign-out" aria-hidden="true"></i>Sign out</a></li>
-                </ul>
+                <% if(user.role==='DOCTOR') { %>
+                    <ul class="dropdown-menu text-center" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item p-1" href="#profile" data-bs-toggle="modal" data-bs-target="#profile"><i class="fas fa-user"></i> Profile</a></li>
+                        <li><a class="dropdown-item p-1" href="#staticBackdrop" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa fa-sign-out" aria-hidden="true"></i>Sign out</a></li>
+                    </ul>
+                <% } else { %>
+                    <ul class="dropdown-menu text-center" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item p-1" href="#profile" data-bs-toggle="modal" data-bs-target="#profile"><i class="fas fa-user"></i> Profile</a></li>
+                        <li><a class="dropdown-item p-1" href="#district" data-bs-toggle="modal" data-bs-target="#district"><i class="fas fa-user-shield"></i> District Details</a></li>
+                        <li><a class="dropdown-item p-1" href="#doctor" data-bs-toggle="modal" data-bs-target="#doctor"><i class="fas fa-user-md"></i> Doctor Details</a></li>
+                        <li><hr class="dropdown-divider my-1"></li>
+                        <li><a class="dropdown-item p-1" href="#staticBackdrop" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa fa-sign-out" aria-hidden="true"></i>Sign out</a></li>
+                    </ul>
+                <% } %>
+                
             </div>
         </div>
         <ul class="list-unstyled components text-center">
@@ -608,7 +619,7 @@
                                     <% } %>   
                                 >
                                     <div class="form-group">
-                                        <textarea rows="5" class="form-control" id="address" name="address"></textarea>
+                                        <textarea rows="5" class="form-control" id="address" name="address"><%= patientdata[0].dailydata[k].review %></textarea>
                                     </div>
                                     <div class="p-2 text-center">
                                         <button type="submit" class="shadow btn btn-dark btn-lg rounded-pill">Submit</button>
@@ -794,9 +805,107 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <% if(user.role === 'PATIENT') { %>
-                    <div class="modal-body"></div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <p>Patient ID : <%= patientdata[0].patientid %></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-sm-6">
+                                <p>Address : <%= patientdata[0].address.district %></p>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <p>Caretaker's name : <%= patientdata[0].caretaker.name %> </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <p>Caretaker's Phone No: <%= patientdata[0].caretaker.phoneno %></p>
+                            </div> 
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <p>Startdate : <%= patientdata[0].startdate %></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <p>Enddate : <%= patientdata[0].enddate %></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <p>Covid report : <%= patientdata[0].status %></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <p>Early symptons:</p>
+                            <% var a=[]; %>
+                            <% if (patientdata[0].symptons.fever) {%>
+                                <% a.push("Fever") %>
+                            <% } %>
+                            <% if (patientdata[0].symptons.chills) {%>
+                                <% a.push("Chills") %>
+                            <% } %>
+                            <% if (patientdata[0].symptons.cough) {%>
+                                <% a.push("Cough") %>
+                            <% } %>
+                            <% if (patientdata[0].symptons.shortness_of_breath) {%>
+                                <% a.push("Shortness of breath") %>
+                            <% } %>
+                            <% if (patientdata[0].symptons.muscle_body_aches) {%>
+                                <% a.push("Muscle body aches") %>
+                            <% } %>
+                            <% if (patientdata[0].symptons.taste_smell_loss) {%>
+                                <% a.push("Loss of taste & smell") %>
+                            <% } %>
+                            <% if (patientdata[0].symptons.fatigue) {%>
+                                <% a.push("Fatigue") %>
+                            <% } %>
+                            <% if (patientdata[0].symptons.headache) {%>
+                                <% a.push("Headache") %>
+                            <% } %>
+                            <% if (patientdata[0].symptons.sore_throat) {%>
+                                <% a.push("Sore throat") %>
+                            <% } %>
+                            <% if (patientdata[0].symptons.runny_nose) {%>
+                                <% a.push("Runny nose") %>
+                            <% } %>
+                            <% if (patientdata[0].symptons.nausea) {%>
+                                <% a.push("Nausea") %>
+                            <% } %>
+                            <% if (patientdata[0].symptons.dairrhea) {%>
+                                <% a.push("Dairrhea") %>
+                            <% } %>
+                            <% for(var i=0;i < a.length;i++) {%>
+                                <div class="col-6">
+                                    <li><%= a[i] %></li>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
                 <% } else { %>
-                    <div class="modal-body"></div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12 col-sm-6">
+                                <p>Phone No : <%= user.phone_no %></p>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <p>District : <%= user.district %></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <p>Email : <%= user.email %></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <p>No. of Patients alloted : <%=  %></p>
+                            </div>
+                        </div>
+                    </div>
                 <% } %>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-close"></i> Close</button>
