@@ -4,6 +4,7 @@ const express=require('express')
       mongoose=require('mongoose')
       passport=require('passport')
       LocalStrategy=require('passport-local')
+      nodemailer=require('nodemailer')
       require('dotenv').config()
 
 app.set("view engine","ejs")
@@ -56,6 +57,35 @@ app.use(function(req,res,next){
 
 //////////////////////////// Auth Setup Ends ///////////////////////////////
 
+/////////////////////////// Mail Setup Starts //////////////////////////////
+
+let mailTransporter = nodemailer.createTransport({ 
+    service: 'gmail', 
+    auth: { 
+        user: process.env.EMAIL_ID, 
+        pass: process.env.PASS
+    } 
+});
+let mailDetails = { 
+    from: process.env.EMAIL_ID, 
+}; 
+
+app.get("/send",(req, res) => {
+    mailDetails.to='adas.24.jp@gmail.com'
+    mailDetails.subject='Test'
+    mailDetails.message='Test Message'
+    console.log(mailDetails)
+    mailTransporter.sendMail(mailDetails, function(err, data) { 
+        if(err) { 
+            console.log('Error Occurs'+err); 
+        } else { 
+            console.log('Email sent successfully'); 
+        } 
+    });
+})
+////////////////////////// Mail Setup Ends ////////////////////////////////
+
+
 //////////////////////////// Roles ////////////////////////////////////////
 
 const roles ={
@@ -80,7 +110,7 @@ app.get("/home/:role/:id",isLoggedIn,(req,res)=>{
                 if(err) console.log(err)
                 else{
                     console.log(patientdetails)
-                    User.findById({_id:patientdetails[0].doctorid},(err,doctor)=>{
+                    User.find({$or:[{_id:patientdetails[0].doctorid},{name:patientdetails[0].address.district}]},(err,doctor)=>{
                         if(err) console.log(err)
                         else{
                              console.log('Doctor',doctor)
@@ -103,7 +133,14 @@ app.get("/home/:role/:id",isLoggedIn,(req,res)=>{
                         if(err) console.log(err)
                         else {
                             console.log('PAtients',patients)
-                            res.render("doctorhome",{user:req.user,doctor:doctor[0],patients:patients})
+                            Patient.find({patientid:{$in:doctor[0].patientid}},(err,patientdetails)=>{
+                                if(err) console.log(err)
+                                else{
+                                    console.log('Patient details',patientdetails)
+                                    res.render("doctorhome",{user:req.user,doctor:doctor[0],patients:patients,patientdetails:patientdetails})
+                                } 
+                            })
+                            
                         }
                     })
                 }
@@ -143,10 +180,38 @@ app.post("/home/PATIENT/:id",(req,res)=>{
     console.log(req.body)
     Patient.findOneAndUpdate({patientid:req.params.id},{$push:{dailydata:req.body.patient.dailydata}},{upsert:true},(err,result)=>{
         if(err) console.log(err)
-        else console.log(result)
+        else {
+            console.log(result)
+            mailDetails.to=req.user.email
+            mailDetails.subject='Day-'+req.body.patient.dailydata.day+'-'+req.body.patient.dailydata.time+' Data received'
+            mailDetails.text='Sir/Madam '+req.user.name+'\n\nYour data received\n\n Take care ! Stay Safe !'
+            console.log(mailDetails)
+            mailTransporter.sendMail(mailDetails,(err,mail)=>{
+                if(err) console.log(err)
+                else {
+                    console.log('Mail sent successfully',mail)
+                }
+            })
+            var doctorid=result.doctorid
+            User.findOne({_id:doctorid},(err,doctor)=>{
+                if(err) console.log(err)
+                else {
+                    console.log('Respective doctor',doctor)
+                    mailDetails.to=doctor.email
+                    mailDetails.subject='Day-'+req.body.patient.dailydata.day+'-'+req.body.patient.dailydata.time+' Data received from '+req.user.name
+                    mailDetails.text='Dear Dr '+doctor.name+'\n\nData received\n\n Take care ! Stay Safe !'
+                    console.log(mailDetails)
+                    mailTransporter.sendMail(mailDetails,(err,mail)=>{
+                        if(err) console.log(err)
+                        else {
+                            console.log('Mail sent successfully',mail)
+                            res.redirect("/home/PATIENT/"+req.params.id)
+                        }
+                    })
+                }
+            })
+        }
     })
-    res.redirect("/home/PATIENT/"+req.params.id)
-    //send an email notification
 })
 
 app.get("/emergency",isLoggedIn,isPatient,(req,res)=>{
@@ -157,16 +222,65 @@ app.get("/emergency",isLoggedIn,isPatient,(req,res)=>{
     }
     District.findOneAndUpdate({district:req.user.district},{$push:{sos_requests:newRequest}},(err,result)=>{
         if(err) console.log(err)
-        else res.redirect("/home/PATIENT/"+req.user._id)
+        else {
+            res.redirect("/home/PATIENT/"+req.user._id)
+            User.findOne({_id:result.districtid},(err,districtUser)=>{
+                if(err) console.log(err)
+                else {
+                    console.log(districtUser)
+                    mailDetails.to=districtUser.email
+                    mailDetails.subject='EMERGENCY!!! from '+ req.user.name
+                    mailDetails.text='Dear Sir/Madam\nYou have an emergency request\nRespond Immediately\n Email:'+req.user.email+'\nPhone no:'+req.user.phone_no+'\nName:'+req.user.name
+                    console.log(mailDetails)
+                    mailTransporter.sendMail(mailDetails,(err,mail)=>{
+                        if(err) console.log(err)
+                        else {
+                            console.log('Mail sent successfully',mail)
+                            res.redirect("/home/PATIENT/"+req.params.id)
+                        }
+                    })
+                    mailDetails.to=req.user.email
+                    mailDetails.subject='Emergency SOS request recevied!'
+                    mailDetails.text='District Administration will  get in touch with you soon \n All possible effort is being made to shift you to the hospital'
+                    console.log(mailDetails)
+                    mailTransporter.sendMail(mailDetails,(err,mail)=>{
+                        if(err) console.log(err)
+                        else {
+                            console.log('Mail sent successfully',mail)
+                            res.redirect("/home/PATIENT/"+req.params.id)
+                        }
+                    })
+                }
+            })
+        }
     })
-    //send an email notifiaction
+    //send an email notifiaction to district
 })
 
 app.get("/extend/:id",isLoggedIn,isDoctor,(req,res)=>{
     Patient.findOneAndUpdate({patientid:req.params.id},[{$set:{enddate:{$add:["$enddate",7* 24 * 60 * 60 * 1000]}}}],{new:true},(err,extendedPatient)=>{
         if(err) console.log(err)
-        else res.redirect("/home/DOCTOR/"+req.user._id)
+        else{
+            User.findOne({_id:extendedPatient.patientid},(err,patientUser)=>{
+                if(err) console.log(err)
+                else {
+                    mailDetails.to=patientUser.email
+                    mailDetails.subject='Your quarantine period  has been extended by 7 days'
+                    mailDetails.text='Your quaratine period will end on '+extendedPatient.enddate+'\nTake care\nStay Safe'
+                    console.log(mailDetails)
+                    mailTransporter.sendMail(mailDetails,(err,mail)=>{
+                        if(err) console.log(err)
+                        else {
+                            console.log('Mail sent successfully',mail)
+                            //res.redirect("/home/PATIENT/"+req.params.id)
+                        }
+                    })
+                }
+            })
+            res.redirect("/home/DOCTOR/"+req.user._id)
+        } 
     })
+    //send email notification to patient
 })
 app.get("/discharge/:id",isLoggedIn,isDoctor,(req,res)=>{
     Patient.findOneAndUpdate({patientid:req.params.id},{status:'negative'},{new:true},(err,negativePatient)=>{
@@ -174,7 +288,26 @@ app.get("/discharge/:id",isLoggedIn,isDoctor,(req,res)=>{
         else{
             Doctor.findOneAndUpdate({doctorid:req.user._id},{$pull:{patientid:req.params.id},$inc:{noofpatient:-1}},{new:true},(err,negativeDoctor)=>{
                 if(err) console.log(err)
-                else res.redirect("/home/DOCTOR/"+req.user._id)
+                else {
+                    User.findOne({_id:negativePatient.patientid},(err,patientUser)=>{
+                        if(err) console.log(err)
+                        else {
+                            mailDetails.to=patientUser.email
+                            mailDetails.subject='Congratulations!! You have successfully completed quaratine period'
+                            mailDetails.text='You have been discharged\nIf any health  issues dail 108!'+'\nTake care\nStay Safe'
+                            console.log(mailDetails)
+                            mailTransporter.sendMail(mailDetails,(err,mail)=>{
+                                if(err) console.log(err)
+                                else {
+                                    console.log('Mail sent successfully',mail)
+                                    //res.redirect("/home/PATIENT/"+req.params.id)
+                                }
+                            })
+                        }
+                    })
+                    res.redirect("/home/DOCTOR/"+req.user._id)
+                }
+                  //send email notification to patient
             })
         }
     })
@@ -186,7 +319,24 @@ app.post("/review/:id/:day/:time",isLoggedIn,isDoctor,(req,res)=>{
         if(err) console.log(err)
         else {
             console.log('review addded',reviewdPatient)
+            User.findOne({_id:reviewdPatient.patientid},(err,patientUser)=>{
+                if(err) console.log(err)
+                else {
+                    mailDetails.to=patientUser.email
+                    mailDetails.subject='Review from Docotor'
+                    mailDetails.text='Log in to the website to check the review'+'\nTake care\nStay Safe'
+                    console.log(mailDetails)
+                    mailTransporter.sendMail(mailDetails,(err,mail)=>{
+                        if(err) console.log(err)
+                        else {
+                            console.log('Mail sent successfully',mail)
+                            //res.redirect("/home/PATIENT/"+req.params.id)
+                        }
+                    })
+                }
+            })
             res.redirect("/home/PATIENT/"+req.params.id)
+              //send email notification to patient
         }
     })
 })
@@ -231,7 +381,7 @@ app.post("/signup",function(req,res){
             //console.log('user',req.user)
             if(role=="PATIENT"){
                 //console.log(role)
-                var newPatient=new Patient({patientid:req.user._id})
+                var newPatient=new Patient({patientid:req.user._id,district:req.user.district})
                 newPatient.save()
                 res.redirect("/signup/2")
             }else if(role=="DOCTOR"){
