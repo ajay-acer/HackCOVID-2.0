@@ -110,7 +110,7 @@ app.get("/home/:role/:id",isLoggedIn,(req,res)=>{
                 if(err) console.log(err)
                 else{
                     console.log(patientdetails)
-                    User.findById({_id:patientdetails[0].doctorid},(err,doctor)=>{
+                    User.find({$or:[{_id:patientdetails[0].doctorid},{name:patientdetails[0].address.district}]},(err,doctor)=>{
                         if(err) console.log(err)
                         else{
                              console.log('Doctor',doctor)
@@ -133,7 +133,14 @@ app.get("/home/:role/:id",isLoggedIn,(req,res)=>{
                         if(err) console.log(err)
                         else {
                             console.log('PAtients',patients)
-                            res.render("doctorhome",{user:req.user,doctor:doctor[0],patients:patients})
+                            Patient.find({patientid:{$in:doctor[0].patientid}},(err,patientdetails)=>{
+                                if(err) console.log(err)
+                                else{
+                                    console.log('Patient details',patientdetails)
+                                    res.render("doctorhome",{user:req.user,doctor:doctor[0],patients:patients,patientdetails:patientdetails})
+                                } 
+                            })
+                            
                         }
                     })
                 }
@@ -374,7 +381,7 @@ app.post("/signup",function(req,res){
             //console.log('user',req.user)
             if(role=="PATIENT"){
                 //console.log(role)
-                var newPatient=new Patient({patientid:req.user._id})
+                var newPatient=new Patient({patientid:req.user._id,district:req.user.district})
                 newPatient.save()
                 res.redirect("/signup/2")
             }else if(role=="DOCTOR"){
