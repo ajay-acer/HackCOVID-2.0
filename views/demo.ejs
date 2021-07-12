@@ -867,35 +867,43 @@
 <div class="modal fade" id="district" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel"><i class="fas fa-user-shield"></i> District</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-center">
-                    <p>Email : email</p>
-                    <p>Phone No. : phone_no</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-close"></i> Close</button>
-                </div>
+                <% for (var i=0;i< doctor.length;i++) {%>
+                    <% if(doctor[i].role=="DISTRICT") {%>
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel"><i class="fas fa-user-shield"></i><%= doctor[i].name %> </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <p>Email : <%= doctor[i].email %></p>
+                            <p>Phone No. : <%= doctor[i].phone_no %></p>
+                        </div>
+                        <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+                        </div>
+                    <% } %>
+                <% } %>
             </div>
         </div>
 </div>
 <div class="modal fade" id="doctor" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel"><i class="fas fa-user-md"></i> <%= doctor.name %></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body text-center">
-                        <p>Email : <%= doctor.email %></p>
-                        <p>Phone No. : <%= doctor.phone_no %></p>
-                        <p>District : <%= doctor.district %></p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-close"></i> Close</button>
-                    </div>
+                    <% for (var i=0;i< doctor.length;i++) {%>
+                        <% if(doctor[i].role=="DOCTOR") {%>
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel"><i class="fas fa-user-md"></i> <%= doctor[i].name %></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <p>Email : <%= doctor[i].email %></p>
+                                <p>Phone No. : <%= doctor[i].phone_no %></p>
+                                <p>District : <%= doctor[i].district %></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+                            </div>
+                        <% } %>
+                    <% } %>
                 </div>
             </div>
 </div>

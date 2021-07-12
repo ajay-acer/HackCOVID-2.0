@@ -208,7 +208,7 @@ a:focus {
 th,td {
     border: 1px solid rgb(95, 92, 92);
   }
-#doctable {
+  #doctable {
     table-layout: fixed;
     width: 100%; 
   } 
