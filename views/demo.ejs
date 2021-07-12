@@ -811,7 +811,7 @@
                     <p>Covid report : <%= patientdata[0].status %></p>
                     <% var diff3= end.getTime() - syd.getTime(); %>
                     <% var diff2 =( diff3/(1000 * 3600 * 24)); %>
-                    <p>No. of days remaining: <%= diff2 %></p>
+                    <p><b>No. of days remaining: <%= diff2 %></b></p>
                     <p>Early symptons:</p>
                     <% var a=[]; %>
                     <% if (patientdata[0].symptons.fever) {%>
