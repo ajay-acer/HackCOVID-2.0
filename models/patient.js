@@ -79,6 +79,7 @@ const patientSchema=new mongoose.Schema({
     districtid:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
-    }
+    },
+    district:String
 })
 module.exports=new mongoose.model('Patient',patientSchema)
