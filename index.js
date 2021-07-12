@@ -257,6 +257,26 @@ app.get("/emergency",isLoggedIn,isPatient,(req,res)=>{
     //send an email notifiaction to district
 })
 
+app.get("/emergency/Intouch/:id",isLoggedIn,(req,res) => {
+    District.findOneAndUpdate({districtid:req.user._id,sos_requests:{$elemMatch:{patientid:req.params.id}}},{$set:{'sos_requests.$.status':'In touch'}},{new:true},(err,District)=>{
+        if(err) console.log(err)
+        else{
+            console.log(District)
+            res.redirect("/home/DISTRICT/"+req.user._id)
+        }
+    })
+})
+
+app.get("/emergency/Resolved/:id",isLoggedIn,(req,res) => {
+    District.findOneAndUpdate({districtid:req.user._id,sos_requests:{$elemMatch:{patientid:req.params.id}}},{$set:{'sos_requests.$.status':'Resolved','sos_requests.$.resolved_time':new Date()}},{new:true},(err,District)=>{
+        if(err) console.log(err)
+        else{
+            console.log(District)
+            res.redirect("/home/DISTRICT/"+req.user._id)
+        }
+    })
+})
+
 app.get("/extend/:id",isLoggedIn,isDoctor,(req,res)=>{
     Patient.findOneAndUpdate({patientid:req.params.id},[{$set:{enddate:{$add:["$enddate",7* 24 * 60 * 60 * 1000]}}}],{new:true},(err,extendedPatient)=>{
         if(err) console.log(err)
