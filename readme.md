@@ -38,7 +38,7 @@
 ## Process Flow:
     
 * ### Patient's End
-  ![](/public/img/Parient_Flow_Chart.svg)
+  ![](/public/img/Patient_Flow_Chart.svg)
 
 * ### Doctor's End
   ![](/public/img/Doctor_Flow_Chart.svg)
