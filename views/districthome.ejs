@@ -24,9 +24,9 @@
                 <li>
                     <a href="#" class="btna" onclick="openForm('doctorcontent')"><b><i class="fas fa-user-md"></i> Doctors</b></a>
                 </li>
-                <li>
+                <!-- <li>
                     <a href="#" class="btna" onclick="openForm('labcontent')"><b><i class="fa fa-flask" aria-hidden="true"></i> Lab</b></a>
-                </li>
+                </li> -->
             </div>
         </ul>
     </nav>
@@ -43,7 +43,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="nav navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="dropdown-item p-1" href="#staticBackdrop" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><b><i class="fa fa-sign-out" aria-hidden="true"></i>Log out</b></a>
+                            <a class="nav-link" href="#staticBackdrop" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><b><i class="fa fa-sign-out" aria-hidden="true"></i>Log out</b></a>
                         </li>
                     </ul>
                 </div>
@@ -71,10 +71,20 @@
             <table class="table table-striped table-dark p-2 text-center" id="doctable">
                 <tr>
                     <th>Patient ID</th>
+                    <th>Name</th>
+                    <th>Phone No.</th>
+                    <th>Email</th>
                 </tr>
                 <% for(var i=0;i< district.patientid.length;i++) { %>
                     <tr>
-                        <td><a href="" class="link-primary"><%= district.patientid[i] %></a></td>
+                        <td><%= district.patientid[i] %></td>
+                        <% for(var j=0;j< users.length;j++) { %>
+                            <% if(district.patientid[i].toString() === users[j]._id.toString()) {%>
+                                <td><%= users[j].name %></td>
+                                <td><%= users[j].phone_no %></td>
+                                <td><%= users[j].email %></td>
+                            <% } %>
+                        <% } %>
                     </tr>
                 <% } %>
             </table>
@@ -90,7 +100,7 @@
                 </tr>
                 <% district.sos_requests.forEach((sos_requests)=>{ %>
                     <tr>
-                        <td><a href="" class="link-primary"><%= sos_requests.patientid %></a></td>
+                        <td><%= sos_requests.patientid %></td>
                         <td><%= sos_requests.request_time %></td>
                         <td><%= sos_requests.resolved_time %></td>
                         <td><%= sos_requests.status %></td>
@@ -114,15 +124,20 @@
             <table class="table table-striped table-dark p-2 text-center" id="doctable">
                 <tr>
                     <th>Doctor ID</th>
-                    <th>Remove</th>
+                    <th>Name</th>
+                    <th>Phone No.</th>
+                    <th>Email</th>
                 </tr>
                 <% for(i=0;i< district.doctorid.length;i++) { %>
                     <tr>
-                        <td><a href="" class="link-primary"><%= district.doctorid[i] %></a></td>
-                        <td>
-                            <button type="button" class="btn btn-danger rounded-pill p-2" data-bs-toggle="modal" data-bs-target="#removedoc" data-bs-whatever="<%= district.doctorid[i] %>">
-                                <i class="fas fa-user-slash"></i> Remove</button>
-                        </td>
+                        <td><%= district.doctorid[i] %></td>
+                        <% for(var j=0;j< users.length;j++) { %>
+                            <% if(district.doctorid[i].toString() === users[j]._id.toString()) {%>
+                                <td><%= users[j].name %></td>
+                                <td><%= users[j].phone_no %></td>
+                                <td><%= users[j].email %></td>
+                            <% } %>
+                        <% } %>
                     </tr>
                 <% } %>
             </table>
@@ -295,7 +310,11 @@
                         <h5 class="modal-title" id="staticBackdropLabel"><i class="fa fa-user" aria-hidden="true"></i> <%= district.district %></h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body"></div>
+                    <div class="modal-body text-center">
+                        <p>District ID : <%=district.districtid %></p>
+                        <p>Email : <%=user.email %></p>
+                        <p>Phone No. : <%=user.phone_no %></p>
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-close"></i> Close</button>
                     </div>

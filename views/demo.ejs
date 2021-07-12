@@ -7,15 +7,21 @@
                 <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                     <b><i class="fas fa-user"></i> <%= user.name%></b>
                 </a>
-                <ul class="dropdown-menu text-center" aria-labelledby="dropdownMenuLink">
-                    <li><a class="dropdown-item p-1" href="#profile" data-bs-toggle="modal" data-bs-target="#profile"><i class="fas fa-user"></i> Profile</a></li>
-                    <li><a class="dropdown-item p-1" href="#staticBackdrop" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa fa-sign-out" aria-hidden="true"></i>Sign out</a></li>
-                </ul>
+                <% if(user.role==='PATIENT') { %>
+                    <ul class="dropdown-menu text-center" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item p-1" href="#profile" data-bs-toggle="modal" data-bs-target="#profile"><i class="fas fa-user"></i> Profile</a></li>
+                        <li><a class="dropdown-item p-1" href="#district" data-bs-toggle="modal" data-bs-target="#district"><i class="fas fa-user-shield"></i> District Details</a></li>
+                        <li><a class="dropdown-item p-1" href="#doctor" data-bs-toggle="modal" data-bs-target="#doctor"><i class="fas fa-user-md"></i> Doctor Details</a></li>
+                        <li><hr class="dropdown-divider my-1"></li>
+                        <li><a class="dropdown-item p-1" href="#logout" data-bs-toggle="modal" data-bs-target="#logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Sign out</a></li>
+                    </ul>
+                <% } %>
             </div>
         </div>
         <ul class="list-unstyled components text-center">
             <div id="myDiv">
                 <% var syd = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate()); %>
+                <% var end = new Date(new Date(patientdata[0].enddate).getFullYear(),new Date(patientdata[0].enddate).getMonth() , new Date(patientdata[0].enddate).getDate()); %>
                 <% var std = new Date(new Date(patientdata[0].startdate).getFullYear(),new Date(patientdata[0].startdate).getMonth() , new Date(patientdata[0].startdate).getDate()); %>
                 <% var diff= syd.getTime() - std.getTime(); %>
                 <% var diff_days =(diff /(1000 * 3600 * 24)); %>
@@ -39,7 +45,7 @@
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/home/PATIENT/<%= user._id%>"><b><i class="fa fa-home" aria-hidden="true"></i> Home</b></a>
+                            <a class="nav-link active" aria-current="page" href="#"><b><i class="fa fa-home" aria-hidden="true"></i> Home</b></a>
                         </li>
                         <% if(user.role==='PATIENT') { %>
                             <li class="nav-item">
@@ -47,7 +53,7 @@
                             </li>
                         <% } %>
                         <li class="nav-item">
-                            <a class="nav-link" href="#staticBackdrop" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><b><i class="fa fa-sign-out" aria-hidden="true"></i>Log out</b></a>
+                            <a class="nav-link" href="#logout" data-bs-toggle="modal" data-bs-target="#logout"><b><i class="fa fa-sign-out" aria-hidden="true"></i>Log out</b></a>
                         </li>
                     </ul>
                 </div>
@@ -94,7 +100,7 @@
                                     <input name="patient[dailydata][spo2]" type="number" class="form-control" id="spo2" value="<%= patientdata[0].dailydata[k].spo2 %>" required>
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                    <label for="body_temperature" class="col-form-label"><b>Body temperature(&#8451;)</b></label>
+                                    <label for="body_temperature" class="col-form-label"><b>Body temperature(&#8457;)</b></label>
                                     <input name="patient[dailydata][body_temperature]" type="number" class="form-control" id="body_temperature" value="<%= patientdata[0].dailydata[k].body_temperature %>" required>
                                 </div>
                             </div>
@@ -383,7 +389,7 @@
                                         <input name="patient[dailydata][spo2]" type="number" class="form-control" id="spo2" value="<%= patientdata[0].dailydata[k].spo2 %>" required>
                                     </div>
                                     <div class="col-12 col-sm-6">
-                                        <label for="body_temperature" class="col-form-label"><b>Body temperature(&#8451;)</b></label>
+                                        <label for="body_temperature" class="col-form-label"><b>Body temperature(&#8457;)</b></label>
                                         <input name="patient[dailydata][body_temperature]" type="number" class="form-control" id="body_temperature" value="<%= patientdata[0].dailydata[k].body_temperature %>" required>
                                     </div>
                                 </div>
@@ -645,7 +651,7 @@
                             <input name="patient[dailydata][spo2]" type="number" class="form-control" id="spo2" required>
                         </div>
                         <div class="col-12 col-sm-6">
-                            <label for="body_temperature" class="col-form-label"><b>Body temperature(&#8451;)</b></label>
+                            <label for="body_temperature" class="col-form-label"><b>Body temperature(&#8457;)</b></label>
                             <input name="patient[dailydata][body_temperature]" type="number" class="form-control" id="body_temperature" required>
                         </div>
                     </div>
@@ -769,7 +775,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="logout" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -785,25 +791,114 @@
             </div>
         </div>
     </div>
-    </div>
-    <div class="modal fade" id="profile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="profile" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+</div>
+<div class="modal fade" id="profile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="profile" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel"><i class="fa fa-user" aria-hidden="true"></i> <%= user.name%></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <% if(user.role === 'PATIENT') { %>
-                    <div class="modal-body"></div>
-                <% } else { %>
-                    <div class="modal-body"></div>
-                <% } %>
+                <div class="modal-body">
+                    <p>ID : <%= patientdata[0].patientid %></p>
+                    <p>Email : <%= user.email %></p>
+                    <p>Phone No. : <%= user.phone_no %></p>
+                    <p>Address : <%= patientdata[0].address.district %></p>
+                    <p>Caretaker's name : <%= patientdata[0].caretaker.name %> </p>
+                    <p>Caretaker's Phone No: <%= patientdata[0].caretaker.phoneno %></p>
+                    <p>Startdate : <%= patientdata[0].startdate %></p>
+                    <p>Enddate : <%= patientdata[0].enddate %></p>
+                    <p>Covid report : <%= patientdata[0].status %></p>
+                    <% var diff3= end.getTime() - syd.getTime(); %>
+                    <% var diff2 =( diff3/(1000 * 3600 * 24)); %>
+                    <p>No. of days remaining: <%= diff2 %></p>
+                    <p>Early symptons:</p>
+                    <% var a=[]; %>
+                    <% if (patientdata[0].symptons.fever) {%>
+                        <% a.push("Fever") %>
+                    <% } %>
+                    <% if (patientdata[0].symptons.chills) {%>
+                        <% a.push("Chills") %>
+                    <% } %>
+                    <% if (patientdata[0].symptons.cough) {%>
+                        <% a.push("Cough") %>
+                    <% } %>
+                    <% if (patientdata[0].symptons.shortness_of_breath) {%>
+                        <% a.push("Shortness of breath") %>
+                    <% } %>
+                    <% if (patientdata[0].symptons.muscle_body_aches) {%>
+                        <% a.push("Muscle body aches") %>
+                    <% } %>
+                    <% if (patientdata[0].symptons.taste_smell_loss) {%>
+                        <% a.push("Loss of taste & smell") %>
+                    <% } %>
+                    <% if (patientdata[0].symptons.fatigue) {%>
+                        <% a.push("Fatigue") %>
+                    <% } %>
+                    <% if (patientdata[0].symptons.headache) {%>
+                        <% a.push("Headache") %>
+                    <% } %>
+                    <% if (patientdata[0].symptons.sore_throat) {%>
+                        <% a.push("Sore throat") %>
+                    <% } %>
+                    <% if (patientdata[0].symptons.runny_nose) {%>
+                        <% a.push("Runny nose") %>
+                    <% } %>
+                    <% if (patientdata[0].symptons.nausea) {%>
+                        <% a.push("Nausea") %>
+                    <% } %>
+                    <% if (patientdata[0].symptons.dairrhea) {%>
+                        <% a.push("Dairrhea") %>
+                    <% } %>
+                    <div class="row">
+                        <% for(var i=0;i < a.length;i++) {%>
+                            <div class="col-6">
+                                <li><%= a[i] %></li>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>    
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-close"></i> Close</button>
                 </div>
             </div>
         </div>
-    </div>
+</div>
+<div class="modal fade" id="district" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel"><i class="fas fa-user-shield"></i> District</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <p>Email : email</p>
+                    <p>Phone No. : phone_no</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+                </div>
+            </div>
+        </div>
+</div>
+<div class="modal fade" id="doctor" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel"><i class="fas fa-user-md"></i> <%= doctor.name %></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <p>Email : <%= doctor.email %></p>
+                        <p>Phone No. : <%= doctor.phone_no %></p>
+                        <p>District : <%= doctor.district %></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+                    </div>
+                </div>
+            </div>
+</div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script type="text/javascript">
     $(document).ready(function () {
