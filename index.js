@@ -153,7 +153,7 @@ app.get("/home/:role/:id",isLoggedIn,(req,res)=>{
                         if(err) console.log(err)
                         else {
                             console.log('Users',users)
-                            res.render("districthome",{district:district[0],users:users})
+                            res.render("districthome",{district:district[0],users:users,user:req.user})
                         }
                     })
                    

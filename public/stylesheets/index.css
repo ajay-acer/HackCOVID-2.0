@@ -56,7 +56,7 @@ input.invalid {
     border: 2px solid aquamarine;
     background-color: floralwhite;
 }
-.form-control:focus,.form-select:focus {
+.form-control:focus,.form-select:focus,.form-check-input:focus {
     border-color: #00BFA6;
     box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
 } 
@@ -201,6 +201,9 @@ a:focus {
 .form-check-input:checked {
     background-color: #00BFA6;
     border-color: #00BFA6;
+}
+.form-check-input{
+    border: 2px solid #00BFA6;
 }
 th,td {
     border: 1px solid rgb(95, 92, 92);

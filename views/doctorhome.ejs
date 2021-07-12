@@ -1,33 +1,47 @@
 <%- include("partials/header") %>
-<div class="container text-center p-1">
+<div class="container text-center p-2">
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #00BFA6;">
-        <div class="container-fluid">
-            <button class="navbar-toggler mx-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="nav navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="dropdown-item p-1" href="#staticBackdrop" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><b><i class="fa fa-sign-out" aria-hidden="true"></i>Log out</b></a>
-                    </li>
-                </ul>
-            </div>
+        <div class="dropdown mx-3 text-center">
+            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                <b><i class="fas fa-user-md"></i>  Dr. <%= user.name%></b>
+            </a>
+            <ul class="dropdown-menu text-center" aria-labelledby="dropdownMenuLink">
+                <li><a class="dropdown-item p-1" href="#profile" data-bs-toggle="modal" data-bs-target="#profile"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a class="dropdown-item p-1" href="#logout" data-bs-toggle="modal" data-bs-target="#logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Sign out</a></li>
+            </ul>
         </div>
+        <button class="navbar-toggler mx-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav navbar-nav ms-auto">
+                <li class="nav-item mx-3">
+                    <a class="nav-link" href="#logout" data-bs-toggle="modal" data-bs-target="#logout"><b><i class="fa fa-sign-out" aria-hidden="true"></i>Log out</b></a>
+                </li>
+            </ul>
+            </div>
     </nav>
     <div class="row justify-content-center align-items-center p-2">
-        <h3 class="p-2">Dr. <%= user.name%></h3>
         <div class="col-12">
             <table class="table table-striped table-dark p-2" id="doctable">
                 <tr>
                     <th>Patient ID</th>
+                    <th>Name</th>
+                    <th>Phone No.</th>
+                    <th>Email</th>
                     <th>Discharge</th>
                     <th>Extend</th>
                 </tr>
                 <% for(var i=0;i< doctor.patientid.length;i++) { %>
                     <tr>
-
                         <td><a href="/home/PATIENT/<%= doctor.patientid[i] %>" class="link-primary"><%= doctor.patientid[i] %></a></td>
-
+                        <% for(var j=0;j< patients.length;j++) {%>
+                            <% if(patients[j]._id.toString() === doctor.patientid[i].toString()) {%>
+                                <td><%= patients[j].name %></td>
+                                <td><%= patients[j].phone_no %></td>
+                                <td><a href="mailto:<%= patients[j].email %>" class="link-primary"><%= patients[j].email %></a></td>
+                            <% } %>
+                        <% } %>
                         <td>
                             <button type="button" class="btn btn-success rounded-pill p-2" data-bs-toggle="modal" data-bs-target="#discharge" data-bs-whatever="<%= doctor.patientid[i] %>">
                                 <i class="fas fa-hand-holding-medical"></i> Discharge</button>
@@ -43,7 +57,7 @@
         <div class="p-2 text-center">
             <a href="#logout" data-bs-toggle="modal" data-bs-target="#logout" class="btn btn-warning rounded-pill p-2"><i class="fa fa-sign-out" aria-hidden="true"></i> Log out</a>
         </div>
-        <marquee><b>Click patient id to view patient dailydata</b></marquee>
+        <marquee><b style="color: #00BFA6;">click patient id to see patient's health status</b></marquee>
     </div>
 </div>
 <!-- Modal -->
@@ -90,6 +104,26 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-close"></i> Cancel</button>
                 <a href="/logout" class="btn btn-warning"><i class="fa fa-sign-out" aria-hidden="true"></i> Log out</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="profile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="profile" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel"><i class="fas fa-user-md"></i>  Dr. <%= user.name%></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Doctor ID : <%= user._id %></p>
+                <p>Phone No : <%= user.phone_no %></p>
+                <p>District : <%= user.district %></p>
+                <p>Email : <%= user.email %></p>
+                <p><b>No. of Patients alloted :  <%= doctor.noofpatient %></b></p>
+            </div>            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-close"></i> Close</button>
             </div>
         </div>
     </div>
