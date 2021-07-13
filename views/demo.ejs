@@ -49,7 +49,10 @@
                         </li>
                         <% if(user.role==='PATIENT') { %>
                             <li class="nav-item">
-                                <a class="nav-link text-danger" href="/emergency"><b><i class="fa fa-ambulance" aria-hidden="true"></i> Emergency</b></a>
+                                <form action="/emergency" method="post">
+                                    <button type="submit" class="nav-link text-danger" style="background-color: #00BFA6;"><strong><i class="fa fa-ambulance" aria-hidden="true"></i>Emergency</strong></button>
+                                </form>
+                                <!-- <a class="nav-link text-danger" href="/emergency"><b><i class="fa fa-ambulance" aria-hidden="true"></i> Emergency</b></a> -->
                             </li>
                         <% } %>
                         <li class="nav-item">
@@ -62,6 +65,12 @@
         <% if(message.success){ %>
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <strong><%= message.success%></strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <% } %>
+        <% if(message.info){ %>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong><%= message.info%></strong>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <% } %>

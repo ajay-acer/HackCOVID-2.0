@@ -125,7 +125,8 @@ app.get("/home/:role/:id",isLoggedIn,(req,res)=>{
                         if(err) console.log(err)
                         else{
                              console.log('Doctor',doctor)
-                             res.render("demo",{user:req.user,patientdata:patientdetails,doctor:doctor})
+                             console.log(res.locals.message)
+                             res.render("demo",{user:req.user,patientdata:patientdetails,doctor:doctor,message:req.flash("message")})
                         }
                     })
                 } 
@@ -187,7 +188,7 @@ app.get("/home/:role/:id",isLoggedIn,(req,res)=>{
     }
 })
 
-app.post("/home/PATIENT/:id",(req,res)=>{
+app.post("/home/PATIENT/:id",isLoggedIn,isPatient,(req,res)=>{
     console.log(req.body)
     Patient.findOneAndUpdate({patientid:req.params.id},{$push:{dailydata:req.body.patient.dailydata}},{upsert:true},(err,result)=>{
         if(err) console.log(err)
@@ -226,7 +227,7 @@ app.post("/home/PATIENT/:id",(req,res)=>{
     })
 })
 
-app.get("/emergency",isLoggedIn,isPatient,(req,res)=>{
+app.post("/emergency",isLoggedIn,isPatient,(req,res)=>{
     var newRequest={
         request_time:Date.now(),
         patientid:req.user._id,
@@ -259,7 +260,7 @@ app.get("/emergency",isLoggedIn,isPatient,(req,res)=>{
                         if(err) console.log(err)
                         else {
                             console.log('Mail sent successfully',mail)
-                            req.flash('success','Emergency request recevied!')
+                            req.flash('success','Successfull')
                             res.redirect("/home/PATIENT/"+req.params.id)
                         }
                     })
