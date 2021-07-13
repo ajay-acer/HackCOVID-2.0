@@ -48,3 +48,13 @@
 
 ## Data Flow Diagram:
    ![](/public/img/DFD.png)
+   
+## Instructions to Run 
+* Clone the repository
+* Run the command 'npm install'
+* Create '.env' file (Sample .env file is given in the repo)
+   * DBURL='url of the database'
+   * secret='Some random string'
+   * EMAIL_ID='your email id'
+   * PASS='your email password'
+* Run the command 'node index.js'
