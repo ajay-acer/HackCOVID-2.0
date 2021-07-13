@@ -58,7 +58,13 @@
                     </ul>
                 </div>
             </div>
-        </nav>   
+        </nav>  
+        <% if(message.success){ %>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong><%= message.success%></strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <% } %>
         <% for(var j=0;j< diff_days;j++) { %>
         <% var c=0 %>
         <% var x="" %>

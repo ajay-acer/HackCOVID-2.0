@@ -34,6 +34,16 @@ const Patient=require('./models/Patient'),
       User=require('./models/User')
 //////////////////////////// DB Setuo Ends //////////////////////////////////
 
+//////////////////////////// Flash Setup ///////////////////////////////////
+
+const flash=require('connect-flash')
+const cookieParser=require('cookie-parser')
+const session=require('express-session')
+app.use(cookieParser('keyboard cat'))
+app.use(session({cookie:{maxAge:60000}}))
+app.use(flash())
+
+/////////////////////////// Flash Setup Ends //////////////////////////////
 
 //////////////////////////// Auth Setup Starts //////////////////////////////
 
@@ -51,6 +61,7 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req,res,next){
 	res.locals.currentUser=req.user;
+    res.locals.message=req.flash()
 	next();
 });
 
@@ -205,6 +216,7 @@ app.post("/home/PATIENT/:id",(req,res)=>{
                         if(err) console.log(err)
                         else {
                             console.log('Mail sent successfully',mail)
+                            req.flash('success','Successfull')
                             res.redirect("/home/PATIENT/"+req.params.id)
                         }
                     })
@@ -236,7 +248,7 @@ app.get("/emergency",isLoggedIn,isPatient,(req,res)=>{
                         if(err) console.log(err)
                         else {
                             console.log('Mail sent successfully',mail)
-                            res.redirect("/home/PATIENT/"+req.params.id)
+                            //res.redirect("/home/PATIENT/"+req.params.id)
                         }
                     })
                     mailDetails.to=req.user.email
@@ -247,9 +259,11 @@ app.get("/emergency",isLoggedIn,isPatient,(req,res)=>{
                         if(err) console.log(err)
                         else {
                             console.log('Mail sent successfully',mail)
+                            req.flash('success','Emergency request recevied!')
                             res.redirect("/home/PATIENT/"+req.params.id)
                         }
                     })
+                  
                 }
             })
         }
@@ -355,6 +369,7 @@ app.post("/review/:id/:day/:time",isLoggedIn,isDoctor,(req,res)=>{
                     })
                 }
             })
+            req.flash('success','Successfull')
             res.redirect("/home/PATIENT/"+req.params.id)
               //send email notification to patient
         }
@@ -368,7 +383,9 @@ app.get("/login",(req,res)=>{
 })
 app.post("/login",passport.authenticate("local",{
 	failureRedirect:"/login",
+    failureFlash:true,
 	}),function(req,res){
+        req.flash("success","Welcome!")
         if(req.user.role==roles.patient) res.redirect("/home/"+req.user.role+"/"+req.user._id)
         if(req.user.role==roles.doctor) res.redirect("/home/"+req.user.role+"/"+req.user._id)
         if(req.user.role==roles.district) res.redirect("/home/"+req.user.role+"/"+req.user._id)
@@ -395,7 +412,8 @@ app.post("/signup",function(req,res){
 	User.register(newUser,req.body.password,function(err,user){
 		if(err){
 			console.log(err);
-			return res.render("reg");
+            req.flash("error",err.message)
+			return res.redirect("/signup")
 		}
         passport.authenticate("local")(req,res,function(){
             //console.log('user',req.user)
