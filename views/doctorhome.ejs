@@ -29,6 +29,7 @@
                     <th>Name</th>
                     <th>Phone No.</th>
                     <th>Email</th>
+                    <th>No. of days Completed</th>
                     <th>Discharge</th>
                     <th>Extend</th>
                 </tr>
@@ -40,6 +41,15 @@
                                 <td><%= patients[j].name %></td>
                                 <td><%= patients[j].phone_no %></td>
                                 <td><a href="mailto:<%= patients[j].email %>" class="link-primary"><%= patients[j].email %></a></td>
+                            <% } %>
+                        <% } %>
+                        <% for(var j=0;j< patientdetails.length;j++) {%>
+                            <% if(patientdetails[j].patientid.toString() === doctor.patientid[i].toString()) {%>
+                                <% var syd = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate()); %>
+                                <% var std = new Date(new Date(patientdetails[j].startdate).getFullYear(),new Date(patientdetails[j].startdate).getMonth() , new Date(patientdetails[j].startdate).getDate()); %>
+                                <% var diff= syd.getTime() - std.getTime(); %>
+                                <% var diff_days =(diff /(1000 * 3600 * 24)); %>
+                                <td><b><%= diff_days %></b></td>
                             <% } %>
                         <% } %>
                         <td>
