@@ -2,7 +2,7 @@
 
 ## Description
 
-* Due to the COVID-19 crisis, people who are travelling interstate or inter-district need to be home quarantined for 14 days. Also the people who test positive with mild symptons needs quarantined in home
+* Due to the COVID-19 crisis, people who are travelling interstate or inter-district need to be home quarantined for 14 days. Also the people who test positive with mild symptons needs to be quarantined in home
 * Therefore, to continuously check their health status, we have proposed a web based system which is monitoring their health status for every 4 hours.
 * In this web based system a person who are eligible for  home isolation can register by giving some required details.
 * After registering,patients  are required to enter their health status for every 4-5 hours on the website.The entered data will sent to respective doctor  for review.
