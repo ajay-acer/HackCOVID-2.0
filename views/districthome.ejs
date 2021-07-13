@@ -73,6 +73,12 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <% } %>
+        <% if(message.error){ %>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong><%= message.error%></strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <% } %>
         <div id="patientcontent" class="tabcontent" style="display: none;">
             <table class="table table-striped table-dark p-2 text-center" id="doctable">
                 <tr>

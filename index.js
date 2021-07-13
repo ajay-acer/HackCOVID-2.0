@@ -414,6 +414,7 @@ app.post("/signup",function(req,res){
 		if(err){
 			console.log(err);
             req.flash("error",err.message)
+            if(req.user.role==='DISTRICT') res.redirect("/home/DISTRICT/"+req.user._id)
 			return res.redirect("/signup")
 		}
         passport.authenticate("local")(req,res,function(){
