@@ -28,10 +28,10 @@ mongoose.connect(process.env.DBURL,connectionParams)
     console.log(err)
 })
 
-const Patient=require('./models/Patient'),
-      District=require('./models/District'),
-      Doctor=require('./models/Doctor'),
-      User=require('./models/User')
+const Patient=require('./models/patient'),
+      District=require('./models/district'),
+      Doctor=require('./models/doctor'),
+      User=require('./models/user')
 //////////////////////////// DB Setuo Ends //////////////////////////////////
 
 //////////////////////////// Flash Setup ///////////////////////////////////
